@@ -29,10 +29,9 @@ console.log(str.slice(0, str.length - 6));
 
 // В першому підʼїзді квартири 1 -20, в другому 21 - 40, в третьому 41-60.
 // Створити функцію, в яку можна передати номер квартири і при виклику якої буде повертатись номер підʼїзда.
-function searchEntryNumber(appNumber) {
-    console.log(Math.ceil(appNumber / 20));
-}
+searchEntryNumber = (appNumber) => Math.ceil(appNumber / 20);
 
-searchEntryNumber(1);
-searchEntryNumber(25);
-searchEntryNumber(60);
+
+console.log(searchEntryNumber(1));
+console.log(searchEntryNumber(25));
+console.log(searchEntryNumber(60));
