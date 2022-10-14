@@ -1,0 +1,137 @@
+@font-face {
+  font-family: 'Circular Std Book';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Circular Std Book'),
+    url('../fonts/CircularStd-Book.woff2') format('woff2'),
+    url('../fonts/CircularStd-Book.woff') format('woff');
+}
+
+html {
+  box-sizing: border-box;
+  margin: 0;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: inherit;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1440px;
+  height: 100%;
+  font-family: 'Circular Std Book';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 27px;
+  color: #000C2D;
+}
+
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+
+
+.top__nav {
+  min-height: 80px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* align-items: flex-end; */
+  justify-content: space-around;
+  /* padding-left: 69px; */
+  /* padding-right: 128px */
+}
+
+.header__logo {
+  /* position: absolute;  */
+  /* width: 202px; */
+  /* height: 28px; */
+  /* left: 69px; */
+  /* top: 26px; */
+}
+
+.menu__list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 32px;
+  width: 669px;
+
+}
+
+.menu__item {
+  display: block;
+  /* margin-right: 32px; */
+}
+
+.menu__item__link {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  color: #000C2D;
+}
+
+.menu__item__border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2F70FE;
+  line-height: 20px;
+  width: 136px;
+  height: 44px;
+  border: 1px solid;
+
+}
+
+.section__one {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 533px;
+  background: #2F70FE;
+}
+
+.inside__block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 33px;
+  width: 789px;
+  height: 282px;
+  background: grey
+    /* left: 325px; */
+    /* top: 194px; */
+}
+
+.section__two {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 497px;
+  background: rgba(0, 255, 133, 0.08);
+  opacity: 0.6;
+}

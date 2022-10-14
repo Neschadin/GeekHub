@@ -19,7 +19,12 @@ const str = `some test string`;
 console.log(str[0] + str[str.length - 1]);
 
 // Зробити першу й останню букву великими
-console.log((str[0] + str[str.length - 1]).toUpperCase());
+// console.log((str[0] + str[str.length - 1]).toUpperCase());
+console.log(
+  str
+    .replace(/^./, (u) => u.toUpperCase())
+    .replace(/.$/, (u) => u.toUpperCase())
+);
 
 // Знайти позицію другого пробілу
 console.log(str.lastIndexOf(` `) + 1);
