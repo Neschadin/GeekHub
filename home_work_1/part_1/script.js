@@ -10,8 +10,6 @@ console.log((0.6 + 0.7).toFixed(1));
 // Отримати число з рядка ‘100$’
 console.log(parseInt(`100$`));
 
-
-
 // Strings: Є стрінга , потрібно:
 const str = `some test string`;
 
@@ -19,7 +17,6 @@ const str = `some test string`;
 console.log(str[0] + str[str.length - 1]);
 
 // Зробити першу й останню букву великими
-// console.log((str[0] + str[str.length - 1]).toUpperCase());
 console.log(
   str
     .replace(/^./, (u) => u.toUpperCase())
@@ -35,7 +32,6 @@ console.log(str.slice(0, str.length - 6));
 // В першому підʼїзді квартири 1 -20, в другому 21 - 40, в третьому 41-60.
 // Створити функцію, в яку можна передати номер квартири і при виклику якої буде повертатись номер підʼїзда.
 searchEntryNumber = (appNumber) => Math.ceil(appNumber / 20);
-
 
 console.log(searchEntryNumber(1));
 console.log(searchEntryNumber(25));
