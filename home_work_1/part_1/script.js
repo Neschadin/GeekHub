@@ -1,5 +1,3 @@
-// Дедлайн 19.10.22, 11:00
-
 // Numbers
 // Отримати число pi з Math і округлити його до 2 знаків після крапки
 console.log(Math.PI.toFixed(2));
@@ -10,7 +8,7 @@ console.log((0.6 + 0.7).toFixed(1));
 // Отримати число з рядка ‘100$’
 console.log(parseInt(`100$`));
 
-// Strings: Є стрінга , потрібно:
+// Strings:
 const str = `some test string`;
 
 // Отримати першу й останню букви стрінги.
