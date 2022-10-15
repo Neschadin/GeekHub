@@ -7,23 +7,22 @@
     url('../fonts/CircularStd-Book.woff') format('woff');
 }
 
-html {
-  box-sizing: border-box;
-  margin: 0;
-  height: 100%;
-}
-
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
-  margin: inherit;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+
 body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: 1440px;
-  height: 100%;
+  min-height: 100%;
   font-family: 'Circular Std Book';
   font-style: normal;
   font-weight: 400;
@@ -32,9 +31,11 @@ body {
   color: #000C2D;
 }
 
+a {
+  text-decoration: none;
+}
 
-img,
-svg {
+img {
   display: block;
   max-width: 100%;
 }
@@ -51,18 +52,21 @@ h6 {
 
 
 
+
+/* header */
+
 .top__nav {
   min-height: 80px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* align-items: flex-end; */
   justify-content: space-around;
-  /* padding-left: 69px; */
-  /* padding-right: 128px */
+  /* padding-top: 18px;
+  padding-bottom: 18px; */
 }
 
 .header__logo {
+  margin: 18px;
   /* position: absolute;  */
   /* width: 202px; */
   /* height: 28px; */
@@ -75,23 +79,19 @@ h6 {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
   gap: 32px;
   width: 669px;
-
+  /* margin: 18px; */
 }
 
 .menu__item {
   display: block;
-  /* margin-right: 32px; */
 }
 
 .menu__item__link {
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  text-decoration: none;
-  color: #000C2D;
 }
 
 .menu__item__border {
@@ -106,32 +106,180 @@ h6 {
 
 }
 
+/* section one */
+
 .section__one {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 533px;
+  min-height: 533px;
   background: #2F70FE;
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
 
-.inside__block {
+.frame__6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px;
+
   gap: 33px;
-  width: 789px;
-  height: 282px;
-  background: grey
-    /* left: 325px; */
-    /* top: 194px; */
+  max-width: 789px;
+  min-height: 282px;
 }
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  max-width: 789px;
+  min-height: 197px;
+}
+
+.hero__text__title {
+  max-width: 620px;
+  min-height: 130px;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 65px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.hero__text__title__title_bottom {
+  max-width: 605px;
+  min-height: 60px;
+  line-height: 30px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.text_black_frame {
+  width: 162px;
+  height: 52px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  padding: 16px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #000000;
+}
+
+
+/* section two */
 
 .section__two {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 497px;
-  background: rgba(0, 255, 133, 0.08);
-  opacity: 0.6;
+  min-height: 497px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background: rgba(0, 255, 132, 0.06);
+}
+
+.list__shell__grow {
+  /* display: block; */
+  /* position: absolute; */
+  /* width: 290px; */
+  /* height: 51px; */
+  /* position: relative; */
+  /* top: 80; */
+  /* margin: 80 auto; */
+  /* margin-top: 80px; */
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 51px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  padding-bottom: 40px;
+  color: #000000;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.frame__92 {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-evenly;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 56px;
+
+  max-width: 824px;
+  min-height: 178px;
+}
+
+.frame__92__insade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  height: 178px;
+}
+
+.plane__text {
+  text-align: center;
+  letter-spacing: 0.01em;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.partner__left {
+  position: absolute;
+  left: 98px;
+  top: 400px;
+
+}
+
+
+.partner__right {
+  position: absolute;
+  left: 67.5%;
+  right: 8.88%;
+  top: 29.27%;
+  bottom: 84.69%;
+  mix-blend-mode: luminosity;
+}
+
+
+@media (max-width: 1050px) {
+  .partner__left {
+    display: none;
+  }
+
+  .partner__right {
+    display: none;
+  }
+}
+
+@media (max-width: 350px) {
+  .menu__list {
+    flex-direction: column;
+  }
+
+  .frame__92 {
+    flex-direction: column;
+  }
 }
