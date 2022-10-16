@@ -22,8 +22,9 @@ body {
   flex-direction: column;
   margin: 0 auto;
   max-width: 1440px;
+  min-width: 200px;
   min-height: 100%;
-  font-family: 'Circular Std Book';
+  font-family: 'Circular Std Book', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -55,7 +56,7 @@ h6 {
 
 /* header */
 
-.top__nav {
+header {
   min-height: 80px;
   display: flex;
   flex-wrap: wrap;
@@ -74,17 +75,16 @@ h6 {
   /* top: 26px; */
 }
 
-.menu__list {
+ul {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
   gap: 32px;
   width: 669px;
   /* margin: 18px; */
 }
 
-.menu__item {
+li {
   display: block;
 }
 
@@ -202,22 +202,21 @@ h6 {
 .frame__92 {
   display: flex;
   /* flex-wrap: wrap; */
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  padding: 0px;
   gap: 56px;
 
   max-width: 824px;
   min-height: 178px;
 }
 
-.frame__92__insade {
+.frame__in__92 {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  height: 178px;
+  max-width: 410px;
 }
 
 .plane__text {
@@ -227,14 +226,55 @@ h6 {
 }
 
 
+/* section three */
+
+.section__three {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 110px;
+  display: flex;
+  max-width: 1150px;
+  min-height: 2200px;
+  flex-flow: row-reverse wrap;
+  justify-content: space-evenly;
 
 
+  align-items: space-evenly;
+  gap: 56px;
+}
 
+.frame__section__three {
+  display: flex;
+  flex-direction: column;
 
+  gap: 24px;
+  width: 410px;
+}
 
+.text__in__frame__700 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 37px;
+  color: #181818;
+}
 
+.signup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 28px;
+  /* identical to box height, or 175% */
 
+  text-align: center;
 
+  color: #2F70FE;
+  /* width: 119px;
+height: 28px; */
+}
 
 
 
@@ -258,10 +298,42 @@ h6 {
   position: absolute;
   left: 67.5%;
   right: 8.88%;
-  top: 29.27%;
+  top: 9.27%;
   bottom: 84.69%;
   mix-blend-mode: luminosity;
 }
+
+
+
+footer{
+  display: flex;
+  position: relative;
+  min-height: 397px;
+  background: #000000;
+}
+
+
+.footer__frame{
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 24px;
+position: absolute;
+border: 1px solid #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (max-width: 1050px) {
@@ -273,6 +345,16 @@ h6 {
     display: none;
   }
 }
+
+@media (max-width: 830px){
+  .section__three{
+    flex-direction: column;
+  }
+  .img__up{
+
+  }
+}
+
 
 @media (max-width: 350px) {
   .menu__list {
