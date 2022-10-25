@@ -82,9 +82,9 @@ function findVolumeWater(mountains) {
     function sumVolume(mountains) {
         let nextMaxMountain = 0;
         mountains.forEach(elem => {
-            nextMaxMountain >= elem ?
-                volume += nextMaxMountain - elem :
-                nextMaxMountain = elem;
+            nextMaxMountain >= elem
+                ? volume += nextMaxMountain - elem
+                : nextMaxMountain = elem;
         })
     }
 
