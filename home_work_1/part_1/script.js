@@ -33,6 +33,7 @@ let findSecondSpacePosition = (str) => {
         ? "this string does not contain the required number of spaces"
         : index;
 }
+findSecondSpacePosition(str);
 
 // Отримати нову стрінгу без останніх 6 символів
 let getNewString = (str) => str.slice(0, str.length - 6);
