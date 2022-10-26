@@ -5,7 +5,7 @@ multiply(2, 3, 4);
 
 
 // Створити фунцію reverseString яка приймає 1 аргумент будь-якого типу, і розвертає його. Наприклад: ‘test’ -> 'tset', undefined -> ‘denifednu’
-function reverseString(arg) {
+let reverseString = (arg) => {
     if (typeof arg != 'string') arg = typeof arg;
     return arg.split("").reverse().join("");
 }
@@ -20,7 +20,7 @@ reverseString('GeekHub');
 // Якщо передали не число. Помилка return new Error(“Please provide a valid number”);
 // Далі функція генерує рандомне число від 1 до 10 і якщо задане число правильне повертає стрінгу ‘You Win!’, 
 // якщо не правильно ‘You are lose, your number is 8, the random number is 5’
-function guessing(num) {
+let guessing = (num) => {
     if (!isFinite(num)) return 'Please provide a valid number';
     if (num < 1 || num > 10) return 'Please provide number in range 1 - 10';
     let randomNum = Math.floor(Math.random() * 10) + 1;
@@ -37,13 +37,14 @@ guessing(5);
 guessing(10);
 
 
-// Є масив чисел (додатних, відʼємних, і впереміш). Потрібно знайти min, max, sum. Не можна використовувати методи масивів або обʼєкту Math, а тільки цикли for і while. Приклади масивів:
+// Є масив чисел (додатних, відʼємних, і впереміш). Потрібно знайти min, max, sum. 
+// Не можна використовувати методи масивів або обʼєкту Math, а тільки цикли for і while.Приклади масивів:
 // [3,0,-5,1,44,-12,3,0,0,1,2,-3,-3,2,1,4,-2-3-1]
 // [-1,-8,-2]
 // [1,7,3]
 // [1,undefined,3,5,-3]
 // [1,NaN,3,5,-3]
-function minMaxSum(arr) {
+let minMaxSum = (arr) => {
     let min = arr[0],
         max = arr[0],
         sum = 0;
@@ -72,7 +73,7 @@ minMaxSum([1, NaN, 3, 5, -3]);
 // // [2, 2, 1, 2, 2, 3, 0, 1, 2] // 4
 // // [2, 1, 5, 0, 3, 4, 7, 2, 3, 1, 8] // 24
 // // [2, 2, 2, 2, 2] // 0
-function findVolumeWater(mountains) {
+let findVolumeWater = (mountains) => {
     let iMountMax = mountains.indexOf(Math.max.apply(null, mountains)),
         volume = 0;
 
