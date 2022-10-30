@@ -1,11 +1,11 @@
 // Створити функцію multiple() яка може приймати не обмежену кількість аргументів, та перемножує їх
-let multiply = (...args) => args.reduce((acc, cur) => acc * cur);
+const multiply = (...args) => args.reduce((acc, cur) => acc * cur);
 
 multiply(2, 3, 4);
 
 
 // Створити фунцію reverseString яка приймає 1 аргумент будь-якого типу, і розвертає його. Наприклад: ‘test’ -> 'tset', undefined -> ‘denifednu’
-let reverseString = (arg) => {
+const reverseString = (arg) => {
     if (typeof arg != 'string') arg = typeof arg;
     return arg.split("").reverse().join("");
 }
@@ -20,13 +20,13 @@ reverseString('GeekHub');
 // Якщо передали не число. Помилка return new Error(“Please provide a valid number”);
 // Далі функція генерує рандомне число від 1 до 10 і якщо задане число правильне повертає стрінгу ‘You Win!’, 
 // якщо не правильно ‘You are lose, your number is 8, the random number is 5’
-let guessing = (num) => {
+const guessing = (num) => {
     if (!isFinite(num)) return 'Please provide a valid number';
     if (num < 1 || num > 10) return 'Please provide number in range 1 - 10';
-    let randomNum = Math.floor(Math.random() * 10) + 1;
-    return num === randomNum ?
-        'You Win!' :
-        `You are lose, your number is ${num}, the random number is ${randomNum}`;
+    const randomNum = Math.floor(Math.random() * 10) + 1;
+    return num === randomNum
+        ? 'You Win!'
+        : `You are lose, your number is ${num}, the random number is ${randomNum}`;
 }
 
 guessing('addf');
@@ -44,10 +44,10 @@ guessing(10);
 // [1,7,3]
 // [1,undefined,3,5,-3]
 // [1,NaN,3,5,-3]
-let minMaxSum = (arr) => {
-    let min = arr[0],
-        max = arr[0],
-        sum = 0;
+const minMaxSum = (arr) => {
+    let min = arr[0];
+    let max = arr[0];
+    let sum = 0;
     for (let i = 0; i < arr.length; i++) {
         if (!isFinite(arr[i])) continue;
         if (arr[i] < min) min = arr[i];
@@ -73,9 +73,9 @@ minMaxSum([1, NaN, 3, 5, -3]);
 // // [2, 2, 1, 2, 2, 3, 0, 1, 2] // 4
 // // [2, 1, 5, 0, 3, 4, 7, 2, 3, 1, 8] // 24
 // // [2, 2, 2, 2, 2] // 0
-let findVolumeWater = (mountains) => {
-    let iMountMax = mountains.indexOf(Math.max.apply(null, mountains)),
-        volume = 0;
+const findVolumeWater = (mountains) => {
+    const iMountMax = mountains.indexOf(Math.max.apply(null, mountains));
+    let volume = 0;
 
     sumVolume(mountains.slice(0, iMountMax + 1));
     sumVolume(mountains.slice(iMountMax).reverse());
