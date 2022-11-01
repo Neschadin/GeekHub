@@ -127,7 +127,7 @@ getElementHeight.call(element); // 25
 
 
 //4. + Переробити функцію на стрілочну
-const convertToObject = num => {
+const convertToObject = (num) => {
     const obj = {
         value: num,
         isOdd: Boolean(num % 2)
@@ -164,7 +164,7 @@ multiply(10);
 const myModule = {
     string: "",
     setString(value) {
-        this.string = !value ? "" : value.toString();
+        this.string = !value ? "" : String(value);
     },
     getString() {
         return this.string;
