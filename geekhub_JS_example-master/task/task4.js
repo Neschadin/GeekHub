@@ -39,7 +39,7 @@ var stringDotTests = [{
 function stringDot(word) {
     return word
       .replace(/A|O|Y|E|U|I/gi, match => ``)
-      .replace(/[a-z]/gi, match => `.${match}`)
+      .replace(/[b-z]/gi, match => `.${match}`)
       .toLowerCase();
 }
 

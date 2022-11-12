@@ -55,9 +55,20 @@ var luckyNumberTests = [
 
 
 function luckyNumber(number) {
-    //TODO
+    let str = String(number);
+    if (str.length !== str.replace(/[^\d]/g, "").length && number < 1 && number.length > 1018)      return false;
+    // count = str.match(/[4|7]/g).length;
+    if (
+      str.match(/[4|7]/g).length === 4 ||
+      str.match(/[4|7]/g).length === 7 ||
+      str.match(/[4|7]/g).length === str.length
+    )
+      return true;
+    return false;
+    
+    // console.log(count);
 }
-
+// luckyNumber(4444444);
 
 tasks.push({
     title: "Почти счастливое число",
