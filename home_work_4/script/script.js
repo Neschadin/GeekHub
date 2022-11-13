@@ -1,4 +1,3 @@
-// const tasks = document.querySelector(".tasks");
 const taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB")) : [];
 
 const tasks = document.querySelector(".tasks");
@@ -11,40 +10,87 @@ document.querySelector("#sorting_alphabet")
 document.querySelector("#sorting_time")
 .addEventListener("click", () => sorter("creationTime"));
 
-form.addEventListener("keydown", addTask);
-form.addEventListener("click", addTask);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (input.value) {
+    addTask();
+    form.reset();
+  }
+});
 
 
-function addEventListenerForItems() {
-  document.querySelectorAll(".task_item").forEach((item) => {
-    item.addEventListener("click", (e) => {
-      if (e.target.matches(".delete")) deleteItem(item);
-      if (e.target.matches(".task_content")) editTask(e);
-      if (e.target.matches(".check_btn")) checkItem(e, item.firstElementChild);
-    });
+//=================================================
+
+function buildTasksList() {
+  tasks.innerHTML = "";
+  taskDB.forEach((item, i) => {
+    const elem = createHTMLelement(item, i);
+    addListenerToElem(elem);
+    tasks.append(elem);
   });
 }
 
 
-function editTask(e) {
-  document.addEventListener("keydown", (ev) => {
-    if (ev.key == "Enter" || ev.key == "Escape") callBack();
-  });
-  document.addEventListener("click", (ev) => {
-    if (ev.target != e.target) callBack();
-  });
+function createHTMLelement(item, i) {
+  const elem = document.createElement("li");
+  elem.className = "task_item";
+  elem.id = i;
+  elem.innerHTML = `<span class="task_content" ${item.checked
+                                                  ? 'style = "text-decoration: line-through; opacity: 0.5;"'
+                                                  : ""
+                                              } contenteditable>${item.taskContent}</span>
+                      <div>
+                        <img class="drag_drop" src="./icons/drag_drop.svg" alt="drag n drop"></img>
+                        <span class="task_time">${item.creationTime}</span>
+                        <input class="check_btn" type="checkbox" ${item.checked ? "checked" : ""}>
+                        <img class="delete" src="./icons/trash.svg" alt="delete"></img>
+                      </div>`;
+  return elem;
+}
 
-  const callBack = () => {
-    taskDB[e.target.parentElement.id].taskContent = e.target.innerText;
-    document.removeEventListener("keydown", (ev) => {
-      if (ev.key == "Enter" || ev.key == "Escape") callBack();
-    });
-    document.removeEventListener("click", (ev) => {
-      if (ev.target != e.target) callBack();
-    });
-    setTimeout(() => rebuildTasksList());
-    console.log(e.target.innerText);
-  };
+
+function addListenerToElem(elem) {
+  const taskContent = elem.firstElementChild;
+  taskContent.addEventListener("focusout", () => editTask(taskContent));
+  elem.addEventListener("keydown", (e) => {
+    if (e.target.matches(".task_content") && (e.key === "Enter" || e.key === "Escape")) {
+      editTask(taskContent);
+    }
+  });
+  elem.addEventListener("click", (e) => {
+    if (e.target.matches(".check_btn")) checkItem(e, taskContent);
+    if (e.target.matches(".delete")) deleteItem(elem);
+  });
+}
+  
+  //=====================================================
+  
+function setCreationTime() {
+  const time = new Date();
+  const verifyZero = (value) => value.toString().length === 1 ? `0${value}` : `${value}`;
+  const year = time.getFullYear();
+  const month = verifyZero(time.getMonth());
+  const date = verifyZero(time.getDate());
+  const hours = verifyZero(time.getHours());
+  const minutes = verifyZero(time.getMinutes());
+  return `${year}-${month}-${date} / ${hours}:${minutes}`;
+}
+  
+  
+function addTask() {
+  taskDB.push({
+    taskContent: input.value,
+    creationTime: setCreationTime(),
+    checked: false
+  });
+  saveDB();
+  buildTasksList();
+}
+
+function editTask(taskContent) {
+  taskContent.blur();
+  taskDB[taskContent.parentElement.id].taskContent = taskContent.innerText;
+  saveDB();
 }
 
 
@@ -62,63 +108,15 @@ function checkItem(e, taskContent) {
 
 function deleteItem(item) {
   taskDB.splice(item.id, 1);
-  rebuildTasksList();
+  saveDB();
+  buildTasksList();
 }
 
 
 function sorter(sortBy) {
   taskDB.sort((x, y) => x[sortBy].localeCompare(y[sortBy]));
-  rebuildTasksList();
-}
-
-
-function setCreationTime() {
-  const time = new Date();
-  const verifyDate = (value) => value.toString().length === 1 ? `0${value}` : `${value}`;
-  const year = time.getFullYear();
-  const month = verifyDate(time.getMonth());
-  const date = verifyDate(time.getDate());
-  const hours = verifyDate(time.getHours());
-  const minutes = verifyDate(time.getMinutes());
-  return `${year}-${month}-${date} / ${hours}:${minutes}`;
-}
-
-
-function addTask(e) {
-  if ((e.key == "Enter" || e.target.matches(".button_add")) && input.value) {
-    e.preventDefault();
-    taskDB.push({
-      taskContent: input.value,
-      creationTime: setCreationTime(),
-      checked: false
-    });
-    rebuildTasksList();
-    form.reset();
-  }
-}
-
-
-function rebuildTasksList() {
-  tasks.innerHTML = "";
-  taskDB.forEach((item, i) => {
-    const li = document.createElement("li");
-    li.className = "task_item";
-    li.id = i;
-    li.innerHTML = `<span class="task_content" ${
-      item.checked
-        ? 'style = "text-decoration: line-through; opacity: 0.5;"'
-        : ""
-             } contenteditable>${item.taskContent}</span>
-                    <div>
-                        <span class="task_time">${item.creationTime}</span>
-                        <img class="drag_drop" src="./icons/drag_drop.svg" alt="drag n drop"></img>
-                        <input class="check_btn" type="checkbox">
-                        <img class="delete" src="./icons/trash.svg" alt="delete"></img>
-                    </div>`;
-    tasks.append(li);
-  });
-  addEventListenerForItems();
   saveDB();
+  buildTasksList();
 }
 
 
@@ -127,5 +125,4 @@ function saveDB() {
 }
     
 
-rebuildTasksList();
-
+buildTasksList();
