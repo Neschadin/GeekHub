@@ -57,7 +57,6 @@ function buildTasksList() {
 
 
 function createHTMLelement({taskContent, creationTime, checked}) {
-  // console.log(item);
   const elem = document.createElement("li");
   elem.className = "task_item";
   elem.draggable = true;
