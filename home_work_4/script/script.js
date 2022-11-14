@@ -2,7 +2,7 @@ const taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB"
 
 const tasks = document.querySelector(".tasks");
 const form = document.querySelector("form");
-const input = document.querySelector(".input_add");
+const input = form.querySelector(".input_add");
 
 
 document.querySelector("#sorting_alphabet")
@@ -10,7 +10,7 @@ document.querySelector("#sorting_alphabet")
 document.querySelector("#sorting_time")
 .addEventListener("click", () => sorter("creationTime"));
 
-// drag'n'drop
+// begin drag'n'drop
 tasks.addEventListener(`dragstart`, (e) => {
   e.target.classList.add(`selected`);
 });
@@ -34,7 +34,7 @@ tasks.addEventListener(`dragover`, (e) => {
     tasks.insertBefore(selectedElement, nextElement);
   }
 });
-// drag'n'drop
+// end drag'n'drop
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -45,7 +45,7 @@ form.addEventListener("submit", (e) => {
 });
 
 
-// main
+// begin main
 function buildTasksList() {
   tasks.innerHTML = "";
   taskDB.forEach((item) => {
@@ -75,25 +75,27 @@ function createHTMLelement({taskContent, creationTime, checked}) {
 
 
 function addListenerToElem(elem) {
-  elem.firstElementChild.addEventListener("focusout", updateDBfromTaskList);
-  elem.firstElementChild.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === "Escape") elem.firstElementChild.blur();
+  const taskContent = elem.firstElementChild;
+  taskContent.addEventListener("focusout", updateDBfromTaskList);
+  taskContent.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === "Escape") taskContent.blur();
   });
   elem.addEventListener("click", (e) => {
-    if (e.target.matches(".check_btn")) checkItem(e.target);
+    if (e.target.matches(".check_btn")) checkItem(taskContent, e.target.checked);
     if (e.target.matches(".delete")) {
       elem.remove();
       updateDBfromTaskList();
     };
   });
 }
-// main
+// end main
+
 
 function updateDBfromTaskList() {
   taskDB.length = 0;
   tasks.querySelectorAll(".task_item").forEach((item) => {
     taskDB.push({
-      taskContent: item.querySelector(".task_content").outerText,
+      taskContent: item.querySelector(".task_content").innerText,
       creationTime: item.querySelector(".task_time").outerText,
       checked: item.querySelector(".check_btn").checked,
     });
@@ -125,8 +127,8 @@ function addTask() {
 }
 
 
-function checkItem(target) {
-  target.parentElement.previousElementSibling.style = target.checked
+function checkItem(taskContent, checked) {
+  taskContent.style = checked
     ? "text-decoration: line-through; opacity: 0.5;"
     : "";
   updateDBfromTaskList();
