@@ -36,21 +36,6 @@ tasks.addEventListener(`dragover`, (e) => {
 });
 // drag'n'drop
 
-
-
-function updateDBfromTaskList() {
-  taskDB.length = 0;
-  tasks.querySelectorAll(".task_item").forEach((item) => {
-    taskDB.push({
-      taskContent: item.querySelector(".task_content").outerText,
-      creationTime: item.querySelector(".task_time").outerText,
-      checked: item.querySelector(".check_btn").checked,
-    });
-  })
-  saveDB();
-}
-
-
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (input.value) {
@@ -60,8 +45,7 @@ form.addEventListener("submit", (e) => {
 });
 
 
-//=================================================
-
+// main
 function buildTasksList() {
   tasks.innerHTML = "";
   taskDB.forEach((item) => {
@@ -72,18 +56,19 @@ function buildTasksList() {
 }
 
 
-function createHTMLelement(item) {
+function createHTMLelement({taskContent, creationTime, checked}) {
+  // console.log(item);
   const elem = document.createElement("li");
   elem.className = "task_item";
   elem.draggable = true;
   elem.innerHTML = `<span class="task_content" ${
-                                                 item.checked
+                                                 checked
                                                  ? 'style = "text-decoration: line-through; opacity: 0.5;"'
                                                  : ""
-                                                } contenteditable>${item.taskContent}</span>
+                                                } contenteditable>${taskContent}</span>
                        <div>
-                         <span class="task_time">${item.creationTime}</span>
-                         <input class="check_btn" type="checkbox" ${item.checked ? "checked" : ""}>
+                         <span class="task_time">${creationTime}</span>
+                         <input class="check_btn" type="checkbox" ${checked ? "checked" : ""}>
                          <img class="delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
                        </div>`;
   return elem;
@@ -93,10 +78,7 @@ function createHTMLelement(item) {
 function addListenerToElem(elem) {
   elem.firstElementChild.addEventListener("focusout", updateDBfromTaskList);
   elem.firstElementChild.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === "Escape") {
-      elem.firstElementChild.blur();
-      updateDBfromTaskList();
-    }
+    if (e.key === "Enter" || e.key === "Escape") elem.firstElementChild.blur();
   });
   elem.addEventListener("click", (e) => {
     if (e.target.matches(".check_btn")) checkItem(e.target);
@@ -106,9 +88,21 @@ function addListenerToElem(elem) {
     };
   });
 }
-  
-  //=====================================================
-  
+// main
+
+function updateDBfromTaskList() {
+  taskDB.length = 0;
+  tasks.querySelectorAll(".task_item").forEach((item) => {
+    taskDB.push({
+      taskContent: item.querySelector(".task_content").outerText,
+      creationTime: item.querySelector(".task_time").outerText,
+      checked: item.querySelector(".check_btn").checked,
+    });
+  });
+  saveDB();
+}
+
+
 function setCreationTime() {
   const time = new Date();
   const verifyZero = (value) => value.toString().length === 1 ? `0${value}` : `${value}`;
@@ -122,13 +116,13 @@ function setCreationTime() {
   
   
 function addTask() {
-  taskDB.push({
+ const elem = createHTMLelement({
     taskContent: input.value,
     creationTime: setCreationTime(),
     checked: false
   });
-  saveDB();
-  buildTasksList();
+  tasks.append(elem);
+  updateDBfromTaskList();
 }
 
 
@@ -140,10 +134,6 @@ function checkItem(target) {
 }
 
 
-
-
-
-// ok ==========================
 function sorter(sortBy) {
   taskDB.sort((x, y) => x[sortBy].localeCompare(y[sortBy]));
   saveDB();
