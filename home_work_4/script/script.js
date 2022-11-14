@@ -10,6 +10,47 @@ document.querySelector("#sorting_alphabet")
 document.querySelector("#sorting_time")
 .addEventListener("click", () => sorter("creationTime"));
 
+// drag'n'drop
+tasks.addEventListener(`dragstart`, (e) => {
+  e.target.classList.add(`selected`);
+});
+tasks.addEventListener(`dragend`, (e) => {
+  e.target.classList.remove(`selected`);
+  updateDBfromTaskList();
+});
+tasks.addEventListener(`dragover`, (e) => {
+  e.preventDefault();
+
+  const selectedElement = tasks.querySelector(`.selected`);
+  const currentElement = e.target;
+
+  if (selectedElement !== currentElement && currentElement.classList.contains(`task_item`)) {
+   
+    const nextElement =
+      currentElement === selectedElement.nextElementSibling
+        ? currentElement.nextElementSibling
+        : currentElement;
+  
+    tasks.insertBefore(selectedElement, nextElement);
+  }
+});
+// drag'n'drop
+
+
+
+function updateDBfromTaskList() {
+  taskDB.length = 0;
+  tasks.querySelectorAll(".task_item").forEach((item) => {
+    taskDB.push({
+      taskContent: item.querySelector(".task_content").outerText,
+      creationTime: item.querySelector(".task_time").outerText,
+      checked: item.querySelector(".check_btn").checked,
+    });
+  })
+  saveDB();
+}
+
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (input.value) {
@@ -23,43 +64,46 @@ form.addEventListener("submit", (e) => {
 
 function buildTasksList() {
   tasks.innerHTML = "";
-  taskDB.forEach((item, i) => {
-    const elem = createHTMLelement(item, i);
+  taskDB.forEach((item) => {
+    const elem = createHTMLelement(item);
     addListenerToElem(elem);
     tasks.append(elem);
   });
 }
 
 
-function createHTMLelement(item, i) {
+function createHTMLelement(item) {
   const elem = document.createElement("li");
   elem.className = "task_item";
-  elem.id = i;
-  elem.innerHTML = `<span class="task_content" ${item.checked
-                                                  ? 'style = "text-decoration: line-through; opacity: 0.5;"'
-                                                  : ""
-                                              } contenteditable>${item.taskContent}</span>
-                      <div>
-                        <img class="drag_drop" src="./icons/drag_drop.svg" alt="drag n drop"></img>
-                        <span class="task_time">${item.creationTime}</span>
-                        <input class="check_btn" type="checkbox" ${item.checked ? "checked" : ""}>
-                        <img class="delete" src="./icons/trash.svg" alt="delete"></img>
-                      </div>`;
+  elem.draggable = true;
+  elem.innerHTML = `<span class="task_content" ${
+                                                 item.checked
+                                                 ? 'style = "text-decoration: line-through; opacity: 0.5;"'
+                                                 : ""
+                                                } contenteditable>${item.taskContent}</span>
+                       <div>
+                         <span class="task_time">${item.creationTime}</span>
+                         <input class="check_btn" type="checkbox" ${item.checked ? "checked" : ""}>
+                         <img class="delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
+                       </div>`;
   return elem;
 }
 
 
 function addListenerToElem(elem) {
-  const taskContent = elem.firstElementChild;
-  taskContent.addEventListener("focusout", () => editTask(taskContent));
-  elem.addEventListener("keydown", (e) => {
-    if (e.target.matches(".task_content") && (e.key === "Enter" || e.key === "Escape")) {
-      editTask(taskContent);
+  elem.firstElementChild.addEventListener("focusout", updateDBfromTaskList);
+  elem.firstElementChild.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === "Escape") {
+      elem.firstElementChild.blur();
+      updateDBfromTaskList();
     }
   });
   elem.addEventListener("click", (e) => {
-    if (e.target.matches(".check_btn")) checkItem(e, taskContent);
-    if (e.target.matches(".delete")) deleteItem(elem);
+    if (e.target.matches(".check_btn")) checkItem(e.target);
+    if (e.target.matches(".delete")) {
+      elem.remove();
+      updateDBfromTaskList();
+    };
   });
 }
   
@@ -87,32 +131,19 @@ function addTask() {
   buildTasksList();
 }
 
-function editTask(taskContent) {
-  taskContent.blur();
-  taskDB[taskContent.parentElement.id].taskContent = taskContent.innerText;
-  saveDB();
+
+function checkItem(target) {
+  target.parentElement.previousElementSibling.style = target.checked
+    ? "text-decoration: line-through; opacity: 0.5;"
+    : "";
+  updateDBfromTaskList();
 }
 
 
-function checkItem(e, taskContent) {
-  if (e.target?.checked) {
-    taskContent.style = "text-decoration: line-through; opacity: 0.5;";
-    taskDB[taskContent.parentElement.id].checked = true;
-  } else {
-    taskContent.style = "";
-    taskDB[taskContent.parentElement.id].checked = false;
-  }
-  saveDB();
-}
 
 
-function deleteItem(item) {
-  taskDB.splice(item.id, 1);
-  saveDB();
-  buildTasksList();
-}
 
-
+// ok ==========================
 function sorter(sortBy) {
   taskDB.sort((x, y) => x[sortBy].localeCompare(y[sortBy]));
   saveDB();
