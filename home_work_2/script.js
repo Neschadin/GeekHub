@@ -15,7 +15,7 @@ reverseString('GeekHub');
 
 
 const guessing = (num) => {
-    if (typeof num === "string" && !isFinite(num)) return 'Please provide a valid number';
+    if (typeof num === "string" || !/^[\+\-]?\d*$/.test(num)) return "Please provide a valid number";
     if (num < 1 || num > 10) return 'Please provide number in range 1 - 10';
     const randomNum = Math.floor(Math.random() * 10) + 1;
     return num === randomNum
@@ -23,7 +23,6 @@ const guessing = (num) => {
         : `You are lose, your number is ${num}, the random number is ${randomNum}`;
 }
 
-console.log(guessing('1234'));
 guessing(NaN);
 guessing(Infinity);
 guessing(-2);
