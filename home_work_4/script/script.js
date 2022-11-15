@@ -1,8 +1,8 @@
 const taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB")) : [];
 
-const tasks = document.querySelector(".tasks");
-const form = document.querySelector("form");
-const input = form.querySelector(".input_add");
+const tasks = document.querySelector("#tasks");
+const form = document.querySelector("#task_add");
+const input = form.querySelector("#input_add");
 
 
 document.querySelector("#sorting_alphabet")
