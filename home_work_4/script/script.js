@@ -64,12 +64,13 @@ function createHTMLelement({taskContent, creationTime, checked}) {
                                                  checked
                                                  ? 'style = "text-decoration: line-through; opacity: 0.5;"'
                                                  : ""
-                                                } contenteditable>${taskContent}</span>
+                                                } contenteditable></span>
                        <div>
                          <span class="task_time">${creationTime}</span>
                          <input class="check_btn" type="checkbox" ${checked ? "checked" : ""}>
                          <img class="delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
                        </div>`;
+  elem.firstElementChild.insertAdjacentText("afterBegin", taskContent);
   return elem;
 }
 
