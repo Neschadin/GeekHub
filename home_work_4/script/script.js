@@ -7,6 +7,7 @@ const input = form.querySelector(".input_add");
 
 document.querySelector("#sorting_alphabet")
 .addEventListener("click", () => sorter("taskContent"));
+
 document.querySelector("#sorting_time")
 .addEventListener("click", () => sorter("creationTime"));
 
@@ -14,10 +15,12 @@ document.querySelector("#sorting_time")
 tasks.addEventListener(`dragstart`, (e) => {
   e.target.classList.add(`selected`);
 });
+
 tasks.addEventListener(`dragend`, (e) => {
   e.target.classList.remove(`selected`);
   updateDBfromTaskList();
 });
+
 tasks.addEventListener(`dragover`, (e) => {
   e.preventDefault();
 
@@ -38,6 +41,7 @@ tasks.addEventListener(`dragover`, (e) => {
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  
   if (input.value) {
     addTask();
     form.reset();
@@ -48,9 +52,12 @@ form.addEventListener("submit", (e) => {
 // begin main
 function buildTasksList() {
   tasks.innerHTML = "";
+  
   taskDB.forEach((item) => {
     const elem = createHTMLelement(item);
+    
     addListenerToElem(elem);
+    
     tasks.append(elem);
   });
 }
@@ -71,16 +78,20 @@ function createHTMLelement({taskContent, creationTime, checked}) {
                          <img class="delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
                        </div>`;
   elem.firstElementChild.insertAdjacentText("afterBegin", taskContent);
+  
   return elem;
 }
 
 
 function addListenerToElem(elem) {
   const taskContent = elem.firstElementChild;
+  
   taskContent.addEventListener("focusout", updateDBfromTaskList);
+  
   taskContent.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === "Escape") taskContent.blur();
   });
+  
   elem.addEventListener("click", (e) => {
     if (e.target.matches(".check_btn")) checkItem(taskContent, e.target.checked);
     if (e.target.matches(".delete")) {
@@ -94,6 +105,7 @@ function addListenerToElem(elem) {
 
 function updateDBfromTaskList() {
   taskDB.length = 0;
+  
   tasks.querySelectorAll(".task_item").forEach((item) => {
     taskDB.push({
       taskContent: item.querySelector(".task_content").innerText,
@@ -101,6 +113,7 @@ function updateDBfromTaskList() {
       checked: item.querySelector(".check_btn").checked,
     });
   });
+  
   saveDB();
 }
 
@@ -113,6 +126,7 @@ function setCreationTime() {
   const date = verifyZero(time.getDate());
   const hours = verifyZero(time.getHours());
   const minutes = verifyZero(time.getMinutes());
+  
   return `${year}-${month}-${date} / ${hours}:${minutes}`;
 }
   
@@ -123,7 +137,9 @@ function addTask() {
     creationTime: setCreationTime(),
     checked: false
   });
+ 
   tasks.append(elem);
+  
   updateDBfromTaskList();
 }
 
@@ -132,12 +148,14 @@ function checkItem(taskContent, checked) {
   taskContent.style = checked
     ? "text-decoration: line-through; opacity: 0.5;"
     : "";
+  
   updateDBfromTaskList();
 }
 
 
 function sorter(sortBy) {
   taskDB.sort((x, y) => x[sortBy].localeCompare(y[sortBy]));
+  
   saveDB();
   buildTasksList();
 }
