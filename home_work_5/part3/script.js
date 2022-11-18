@@ -14,10 +14,10 @@ function findMatrixCoordinates(R, C, y, x) {
     let i = 1;
     let stepR = 0;
     let stepC = 1;
-    let incr = 2;
+    let incr = 1;
 
     while (i <= R * C) {
-        for (let j = 1; j < incr; j++) {
+        for (let j = 0; j < incr; j++) {
             if (x >= 0 && x < C && y >= 0 && y < R) {
                 arr.push([y, x]);
                 i += 1;
