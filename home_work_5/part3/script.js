@@ -41,7 +41,6 @@ function findMatrixCoordinates(R, C, y, x) {
             stepC = 1;
             incr += 1;
         }
-
     }
 
     return arr;
