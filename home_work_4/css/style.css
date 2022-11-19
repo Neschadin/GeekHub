@@ -40,7 +40,10 @@ nav {
   height: 30px;
   width: 150px;
   border-radius: 10px;
-  background-color: antiquewhite;
+  background-color: #faebd7;
+}
+.menu_button:active{
+   background-color: rgb(185, 173, 158);
 }
 
 img {
