@@ -1,14 +1,14 @@
 let taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB")) : [];
 
 const tasks = document.querySelector("#tasks");
-const form = document.querySelector("#task_add");
-const input = form.querySelector("#input_add");
+const form = document.querySelector("#task-add");
+const input = form.querySelector("#input-add");
 
 
-document.querySelector("#sorting_alphabet")
+document.querySelector("#sorting-alphabet")
   .addEventListener("click", () => sorter("taskContent"));
 
-document.querySelector("#sorting_time")
+document.querySelector("#sorting-time")
   .addEventListener("click", () => sorter("creationTime"));
 
 // begin drag'n'drop
@@ -24,10 +24,10 @@ tasks.addEventListener(`dragend`, (e) => {
 tasks.addEventListener(`dragover`, (e) => {
   e.preventDefault();
 
-  const selectedElement = tasks.querySelector(`.selected`);
+  const selectedElement = tasks.querySelector(`.js-selected`);
   const currentElement = e.target;
 
-  if (selectedElement !== currentElement && currentElement.classList.contains(`task_item`)) {
+  if (selectedElement !== currentElement && currentElement.classList.contains(`js-task-item`)) {
 
     const nextElement =
       currentElement === selectedElement.nextElementSibling ?
@@ -54,7 +54,7 @@ function buildTasksList() {
   tasks.innerHTML = "";
 
   taskDB.forEach((item) => {
-    const elem = createHTMLelement(item);
+    const elem = createHTMLElement(item);
 
     addListenerToElem(elem);
 
@@ -63,21 +63,17 @@ function buildTasksList() {
 }
 
 
-function createHTMLelement({
-  taskContent,
-  creationTime,
-  checked
-}) {
+function createHTMLElement({taskContent, creationTime, checked}) {
   const elem = document.createElement("li");
 
-  elem.className = "task_item";
+  elem.className = "js-task-item";
   elem.draggable = true;
   elem.innerHTML = `
-  <span class="task_content" ${checked ? 'style = "text-decoration: line-through; opacity: 0.5;"' : ""} contenteditable></span>
+  <span class="js-task-content" ${checked ? 'class="js-cross-text"' : ""} contenteditable></span>
     <div>
-      <span class="task_time">${creationTime}</span>
-      <input class="check_btn" type="checkbox" ${checked ? "checked" : ""}>
-      <img class="delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
+      <span class="js-task-time">${creationTime}</span>
+      <input class="js-check-btn" type="checkbox" ${checked ? "checked" : ""}>
+      <img class="js-delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
     </div>`;
   elem.firstElementChild.insertAdjacentText("afterBegin", taskContent);
 
@@ -87,7 +83,6 @@ function createHTMLelement({
 
 function addListenerToElem(elem) {
   const taskContent = elem.firstElementChild;
-  // console.log(taskContent);
   taskContent.addEventListener("focusout", updateDBfromTaskList);
 
   taskContent.addEventListener("keydown", (e) => {
@@ -95,8 +90,8 @@ function addListenerToElem(elem) {
   });
 
   elem.addEventListener("click", (e) => {
-    if (e.target.matches(".check_btn")) checkItem(taskContent, e.target.checked);
-    if (e.target.matches(".delete")) {
+    if (e.target.matches(".js-check-btn")) checkItem(taskContent, e.target.checked);
+    if (e.target.matches(".js-delete")) {
       elem.remove();
       updateDBfromTaskList();
     }
@@ -108,13 +103,15 @@ function addListenerToElem(elem) {
 function updateDBfromTaskList() {
   taskDB.length = 0;
 
-  tasks.querySelectorAll(".task_item").forEach((item) => {
+  tasks.querySelectorAll(".js-task-item").forEach((item) => {
     taskDB.push({
-      taskContent: item.querySelector(".task_content").innerText,
-      creationTime: item.querySelector(".task_time").outerText,
-      checked: item.querySelector(".check_btn").checked,
+      taskContent: item.querySelector(".js-task-content").innerText,
+      creationTime: item.querySelector(".js-task-time").innerText,
+      checked: item.querySelector(".js-check-btn").checked,
     });
   });
+
+  localStorage.removeItem("sortFlag");
 
   saveDB();
 }
@@ -134,24 +131,30 @@ function setCreationTime() {
 
 
 function addTask() {
-  const elem = createHTMLelement({
+  const elem = createHTMLElement({
     taskContent: input.value,
     creationTime: setCreationTime(),
     checked: false
   });
 
   tasks.append(elem);
+
   addListenerToElem(elem);
   updateDBfromTaskList();
 }
 
 
 function checkItem(taskContent, checked) {
-  taskContent.style = checked ?
-    "text-decoration: line-through; opacity: 0.5;" :
-    "";
+  const sortFlag = localStorage.getItem("sortFlag");
+  
+  checked
+    ? taskContent.classList.add(`js-cross-text`)
+    : taskContent.classList.remove(`js-cross-text`);
+
 
   updateDBfromTaskList();
+
+  localStorage.setItem("sortFlag", sortFlag);
 }
 
 
@@ -165,8 +168,8 @@ function sorter(sortBy) {
     localStorage.setItem("sortFlag", sortBy);
   }
 
-    saveDB();
-    buildTasksList();
+  saveDB();
+  buildTasksList();
 }
 
 
