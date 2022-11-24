@@ -141,7 +141,7 @@ function isBalanced(str) {
     }
   }
 
-  return counterBraces ? false : true;
+  return !counterBraces;
 }
 
 
