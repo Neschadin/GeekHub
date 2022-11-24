@@ -131,6 +131,7 @@ function isBalanced(str) {
         counterBraces++;
       }
     }
+    
     if (flag) {
       if (arr[i] === "{") return false;
 
