@@ -1,24 +1,35 @@
 const repoList = document.querySelector(".js-repo-list");
+let arr = [];
+
+
+const getStatus = async (response) => {
+  return response.status === 200 ?
+    await response.json() : 
+    Promise.reject(new Error(response.status));
+};
+// const getDataJson = (response) => response.json();
 
 async function getData(url) {
   await fetch(url)
-    .then(response => response.status === 200 ? response.json() : null)
-    .then(buildRepoList)
-    .catch(console.log("oops..."));
+    .then(getStatus)
+    // .then(getDataJson)
+    .then(response => {
+      arr = response;
+      buildRepoList();
+    })
+    .catch(err => console.log(err));
 }
 
-async function getCommitData(id) {
-  await fetch(url)
-}
 
-function buildRepoList(arr) {
+
+function buildRepoList() {
   console.log(arr);
   arr.forEach(item => {
     const elem = createHTMLElement(item);
     repoList.append(elem);
   })
 }
-  
+
 function createHTMLElement(item) {
   const elem = document.createElement("li");
 
