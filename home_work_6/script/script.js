@@ -1,46 +1,45 @@
 const repoList = document.querySelector(".js-repo-list");
-let arr = [];
 
 
-const getStatus = async (response) => {
+fetch("https://api.github.com/users/Neschadin/repos")
+  .then(getStatus)
+  .then(buildRepoList)
+  .catch(alert);
+
+
+function getStatus(response) {
   return response.status === 200 ?
-    await response.json() : 
+    response.json() :
     Promise.reject(new Error(response.status));
-};
-// const getDataJson = (response) => response.json();
+}
 
-async function getData(url) {
-  await fetch(url)
+
+function getCommitDate(repoName) {
+  fetch(`https://api.github.com/repos/Neschadin/${repoName}/commits`)
     .then(getStatus)
-    // .then(getDataJson)
-    .then(response => {
-      arr = response;
-      buildRepoList();
-    })
-    .catch(err => console.log(err));
+    .then(response => alert("last commit: " + response[0].commit.author.date))
+    .catch(alert);
 }
 
 
-
-function buildRepoList() {
-  console.log(arr);
-  arr.forEach(item => {
+function buildRepoList(response) {
+  response.forEach((item) => {
     const elem = createHTMLElement(item);
+
     repoList.append(elem);
-  })
+  });
+  
+  repoList.addEventListener("click", (e) => {
+    if (e.target.className === "js-list-item") getCommitDate(e.target.innerText);
+  });
 }
+
 
 function createHTMLElement(item) {
   const elem = document.createElement("li");
 
-  elem.className = "js-li-item";
-  elem.id = item.id;
+  elem.className = "js-list-item";
   elem.innerText = item.name;
-
-  elem.addEventListener("click", () => console.log("click"))
 
   return elem;
 }
-
-
-getData("https://api.github.com/users/Neschadin/repos");
