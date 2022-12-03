@@ -8,19 +8,19 @@ function findMatrixCoordinates(R, C, y, x) {
             arg2 >= arg1;
     }
 
-    if (validator(R, y) || validator(C, x)) return "Please provide a valid number";
+    if (validator(R, y) || validator(C, x)) {
+        return "Please provide a valid number";
+    }
 
     const arr = [];
-    let i = 1;
     let stepR = 0;
     let stepC = 1;
-    let incr = 1;
+    let incr = 0;
 
-    while (i <= R * C) {
-        for (let j = 0; j < incr; j++) {
+    while (arr.length < R * C) {
+        for (let i = 0; i <= incr; i++) {
             if (x >= 0 && x < C && y >= 0 && y < R) {
                 arr.push([y, x]);
-                i += 1;
             }
             y += stepR;
             x += stepC;
@@ -32,14 +32,14 @@ function findMatrixCoordinates(R, C, y, x) {
         } else if (stepR === 1) {
             stepR = 0;
             stepC = -1;
-            incr += 1;
+            incr++;
         } else if (stepC === -1) {
             stepR = -1;
             stepC = 0;
         } else if (stepR === -1) {
             stepR = 0;
             stepC = 1;
-            incr += 1;
+            incr++;
         }
     }
 
