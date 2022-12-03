@@ -1,6 +1,6 @@
 function findMatrixCoordinates(R, C, y, x) {
 
-    function validator(arg1, arg2) {
+    const validator = (arg1, arg2) => {
         return typeof arg1 === "string" ||
             typeof arg2 === "string" ||
             !/^([1-9]|[1-9][\d]|[1][0][0])$/.test(arg1) ||
