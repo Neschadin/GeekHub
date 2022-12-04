@@ -1,33 +1,39 @@
 let taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB")) : [];
 
-const tasks = document.querySelector("#tasks");
-const form = document.querySelector("#task-add");
+const tasks = document.getElementById("tasks");
+const form = document.getElementById("task-add");
 const input = form.querySelector("#input-add");
+const btnSortByAlphabet = document.getElementById("sorting-alphabet");
+const btnSortByTime = document.getElementById("sorting-time");
 
-
-document.querySelector("#sorting-alphabet")
-  .addEventListener("click", () => sorter("taskContent"));
-
-document.querySelector("#sorting-time")
-  .addEventListener("click", () => sorter("creationTime"));
-
-// begin drag'n'drop
-tasks.addEventListener(`dragstart`, (e) => {
-  e.target.classList.add(`selected`);
+btnSortByAlphabet.addEventListener("click", () => {
+  currentSortMode("taskContent");
+  sorter("taskContent");
 });
 
-tasks.addEventListener(`dragend`, (e) => {
-  e.target.classList.remove(`selected`);
+btnSortByTime.addEventListener("click", () => {
+  currentSortMode("creationTime");
+  sorter("creationTime");
+});
+
+
+// begin drag'n'drop
+tasks.addEventListener("dragstart", (e) => {
+  e.target.classList.add("js-selected");
+});
+
+tasks.addEventListener("dragend", (e) => {
+  e.target.classList.remove("js-selected");
   updateDBfromTaskList();
 });
 
-tasks.addEventListener(`dragover`, (e) => {
+tasks.addEventListener("dragover", (e) => {
   e.preventDefault();
 
-  const selectedElement = tasks.querySelector(`.js-selected`);
+  const selectedElement = tasks.querySelector(".js-selected");
   const currentElement = e.target;
 
-  if (selectedElement !== currentElement && currentElement.classList.contains(`js-task-item`)) {
+  if (selectedElement !== currentElement && currentElement.classList.contains("js-task-item")) {
 
     const nextElement =
       currentElement === selectedElement.nextElementSibling ?
@@ -69,11 +75,11 @@ function createHTMLElement({taskContent, creationTime, checked}) {
   elem.className = "js-task-item";
   elem.draggable = true;
   elem.innerHTML = `
-  <span class="js-task-content" ${checked ? 'class="js-cross-text"' : ""} contenteditable></span>
+  <span class="js-task-content${checked ? " js-cross-text" : ""}" contenteditable></span>
     <div>
       <span class="js-task-time">${creationTime}</span>
       <input class="js-check-btn" type="checkbox" ${checked ? "checked" : ""}>
-      <img class="js-delete" src="./icons/trash.svg" alt="delete" draggable="false"></img>
+      <img class="js-delete" src="./icons/trash.svg" alt="delete" draggable="false">
     </div>`;
   elem.firstElementChild.insertAdjacentText("afterBegin", taskContent);
 
@@ -148,8 +154,8 @@ function checkItem(taskContent, checked) {
   const sortFlag = localStorage.getItem("sortFlag");
   
   checked
-    ? taskContent.classList.add(`js-cross-text`)
-    : taskContent.classList.remove(`js-cross-text`);
+    ? taskContent.classList.add("js-cross-text")
+    : taskContent.classList.remove("js-cross-text");
 
 
   updateDBfromTaskList();
@@ -173,9 +179,24 @@ function sorter(sortBy) {
 }
 
 
+function currentSortMode(arg) {
+  const sortType = arg ? arg : localStorage.getItem("sortFlag");
+
+  if (sortType === "taskContent") {
+    btnSortByAlphabet.classList.add("js-border");
+    btnSortByTime.classList.remove("js-border");
+  }
+  if (sortType === "creationTime") {
+    btnSortByTime.classList.add("js-border");
+    btnSortByAlphabet.classList.remove("js-border");
+  }
+}
+
+
 function saveDB() {
   localStorage.setItem("DB", JSON.stringify(taskDB));
 }
 
 
+currentSortMode();
 buildTasksList();

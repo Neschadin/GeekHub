@@ -99,3 +99,7 @@ li {
 .js-selected {
   opacity: 0.5;
 }
+
+.js-border{
+  border-color: rgb(235, 20, 65);
+}
