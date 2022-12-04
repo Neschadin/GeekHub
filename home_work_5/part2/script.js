@@ -1,4 +1,4 @@
-1; // + isPrime - Returns true or false, indicating whether the given number is prime.
+//1 + isPrime - Returns true or false, indicating whether the given number is prime.
 function isPrime(num) {
   let i = 2;
 
@@ -16,7 +16,7 @@ isPrime(17); // true
 isPrime(10000000000000); // false
 
 
-2; // + factorial - Returns a number that is the factorial of the given number.
+//2 + factorial - Returns a number that is the factorial of the given number.
 function factorial(num) {
   return num < 0 ? NaN : !num ? 1 : num * factorial(--num);
 }
@@ -25,12 +25,12 @@ factorial(1); // 1
 factorial(6); // 720
 
 
-3; // + fib - Returns the nth Fibonacci number.
+//3 + fib - Returns the nth Fibonacci number.
 function fib(num) {
   if (typeof num === "string" || num === 0 || !/^\d*$/.test(num)) return 0;
 
   let x = 1;
-  let y = x;
+  let y = 1;
   let yNext;
 
   for (let i = 1; i < num; i++) {
@@ -47,7 +47,7 @@ fib(10); // 55
 fib(20); // 6765
 
 
-4; // + isSorted - Returns true or false, indicating whether the given array of numbers is sorted.
+//4 + isSorted - Returns true or false, indicating whether the given array of numbers is sorted.
 function isSorted(arr) {
   return Array.isArray(arr) ?
     JSON.stringify(arr) === JSON.stringify([...arr].sort()) :
@@ -58,7 +58,7 @@ isSorted([-Infinity, -5, 0, 3, 9]); // true
 isSorted([3, 9, -3, 10]); // false
 
 
-5; // + reverse - Reverses the given string (yes, using the built in reverse function is cheating).
+//5 + reverse - Reverses the given string (yes, using the built in reverse function is cheating).
 function reverse(str) {
   return typeof str !== "string" ?
     "nope" :
@@ -70,7 +70,7 @@ reverse(""); // ''
 reverse("abcdef"); // 'fedcba'
 
 
-6; // + indexOf - Implement the indexOf function for arrays.
+//6 + indexOf - Implement the indexOf function for arrays.
 function indexOf(arr, searchElement) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === searchElement) return i;
@@ -82,7 +82,7 @@ indexOf([1, 2, 3], 1); // 0
 indexOf([1, 2, 3], 4); // -1
 
 
-7; //+  isPalindrome - Return true or false indicating whether the given string is a plaindrone (case and space insensitive).
+//7+  isPalindrome - Return true or false indicating whether the given string is a plaindrone (case and space insensitive).
 function isPalindrome(str) {
   if (typeof str !== "string") return "nope";
 
@@ -96,7 +96,7 @@ isPalindrome("abcd"); // false
 isPalindrome("A man a plan a canal Panama"); // true
 
 
-8; // + missing - Takes an unsorted array of unique numbers (ie. no repeats) from 1 through some number n, and returns the missing number in the sequence (there are either no missing numbers, or exactly one missing number). Can you do it in O(N) time? Hint: There’s a clever formula you can use.
+//8 + missing - Takes an unsorted array of unique numbers (ie. no repeats) from 1 through some number n, and returns the missing number in the sequence (there are either no missing numbers, or exactly one missing number). Can you do it in O(N) time? Hint: There’s a clever formula you can use.
 function missing(arr) {
   if (!Array.isArray(arr)) return "nope";
 
@@ -114,35 +114,26 @@ missing([5, 1, 4, 2]); // 3
 missing([1, 2, 3, 4]); // undefined
 
 
-9; // + isBalanced - Takes a string and returns true or false indicating whether its curly braces are balanced.
+//9 + isBalanced - Takes a string and returns true or false indicating whether its curly braces are balanced.
 function isBalanced(str) {
-  if (typeof str !== "string") return "nope";
+  const brackets = str.match(/{|}/g);
+  const arrLength = brackets ? brackets.length : 0;
+  let counterBrackets = 0;
 
-  const arr = str.split("");
-  let counterBraces = 0;
-  let flag = false;
+  if (!brackets) return "is not a string or the string does not contain brackets";
+  if (!arrLength % 2 && arrLength !== str.matchAll(/{ | }/g).length) return false;
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === "}") flag = true;
-
-    if (!flag) {
-      if (arr[i] === "{") {
-        if (arr[i + 1] !== " ") return false;
-        counterBraces++;
-      }
-    }
-    
-    if (flag) {
-      if (arr[i] === "{") return false;
-
-      if (arr[i] === "}") {
-        if (arr[i - 1] !== " ") return false;
-        counterBraces--;
-      }
-    }
+  for (let i = 0; i < arrLength / 2; i++) {
+    if (brackets[i] !== "{") return false;
+    ++counterBrackets;
   }
 
-  return !counterBraces;
+  for (let i = arrLength / 2; i < arrLength; i++) {
+    if (brackets[i] !== "}") return false;
+    --counterBrackets;
+  }
+
+  return !counterBrackets;
 }
 
 

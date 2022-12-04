@@ -1,5 +1,5 @@
 const repoList = document.querySelector(".js-repo-list");
-const spinner = document.querySelector("#spinner");
+const spinner = document.getElementById("spinner");
 
 fetch("https://api.github.com/users/Neschadin/repos")
   .then(getStatus)

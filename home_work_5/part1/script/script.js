@@ -1,5 +1,5 @@
-const list = document.querySelector("#list");
-const input = document.querySelector("#input");
+const list = document.getElementById("list");
+const input = document.getElementById("input");
 let t;
 
 input.addEventListener("keydown", () => {
