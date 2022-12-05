@@ -1,4 +1,4 @@
-let taskDB = localStorage.getItem("DB") ? JSON.parse(localStorage.getItem("DB")) : [];
+let taskDB = JSON.parse(localStorage.getItem("DB")) || [];
 
 const tasks = document.getElementById("tasks");
 const form = document.getElementById("task-add");
@@ -44,6 +44,7 @@ tasks.addEventListener("dragover", (e) => {
   }
 });
 // end drag'n'drop
+
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -118,7 +119,8 @@ function updateDBfromTaskList() {
   });
 
   localStorage.removeItem("sortFlag");
-
+  
+  currentSortMode();
   saveDB();
 }
 
@@ -157,10 +159,11 @@ function checkItem(taskContent, checked) {
     ? taskContent.classList.add("js-cross-text")
     : taskContent.classList.remove("js-cross-text");
 
-
   updateDBfromTaskList();
 
   localStorage.setItem("sortFlag", sortFlag);
+
+  currentSortMode();
 }
 
 
@@ -180,12 +183,18 @@ function sorter(sortBy) {
 
 
 function currentSortMode(arg) {
-  const sortType = arg ? arg : localStorage.getItem("sortFlag");
+  const sortType = arg || localStorage.getItem("sortFlag");
+
+  if (!sortType) {
+    btnSortByTime.classList.remove("js-border");
+    btnSortByAlphabet.classList.remove("js-border");
+  }
 
   if (sortType === "taskContent") {
     btnSortByAlphabet.classList.add("js-border");
     btnSortByTime.classList.remove("js-border");
   }
+
   if (sortType === "creationTime") {
     btnSortByTime.classList.add("js-border");
     btnSortByAlphabet.classList.remove("js-border");
