@@ -1,56 +1,77 @@
-const elemSpinner = document.querySelector(".spinner-wrap");
-const elemWeathercon = document.querySelector(".weathercon");
-const elemLocation = document.querySelector(".location");
-const elemDate = document.querySelector(".date");
-const elemTemp = document.querySelector(".temp");
-const elemForm = document.querySelector(".form");
-const apiKey = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "f2902223d3mshf989ffd7ea8cccap190956jsn0dca5fd07b43",
-    "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
-  },
-};
+let popupBg = document.querySelector(".popup__bg"); // Фон попап окна
+let popup = document.querySelector(".popup"); // Само окно
+// let closePopupButton = document.querySelector(".close-popup"); // Кнопка для скрытия окна
 
-elemForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (e.target[0].value) {
-    getWeatherData(e.target[0].value);
-    elemForm.reset();
+
+
+document.addEventListener("keydon", () => {
+  // Вешаем обработчик на крестик
+  popupBg.classList.remove("active"); // Убираем активный класс с фона
+  popup.classList.remove("active"); // И с окна
+});
+
+document.addEventListener("click", (e) => {
+  // Вешаем обработчик на весь документ
+  if (e.target === popupBg) {
+    // Если цель клика - фот, то:
+    popupBg.classList.remove("active"); // Убираем активный класс с фона
+    popup.classList.remove("active"); // И с окна
   }
 });
 
 
-const showWeatherData = (data) => {
-  elemWeathercon.innerHTML = data ? `<img src="${data.current.condition.icon}">` : "";
-  elemLocation.innerText = data ? data.location.name : "лажа...  :(";
-  elemDate.innerText = data ? data.location.localtime : "";
-  elemTemp.innerText = data ? `${data.current.feelslike_c} °C` : "";
-  elemSpinner.classList.remove("js-show-spinner");
+createTamagochi
+
+
+const wrapper = document.querySelector(".tamagochi_wrapper");
+const metrics = document.querySelector(".tamagochi_metrics");
+const arr = [];
+
+const functions = {
+  play() {
+    console.log("111");
+  },
 };
 
+document.querySelector("nav").addEventListener("click", (e) => {
+    if (e.target.nodeName === "BUTTON") {
+        if (e.target.id === "createTamagochi") {
+            e.preventDefault(); // Предотвращаем дефолтное поведение браузера
+            popupBg.classList.add("active"); // Добавляем класс 'active' для фона
+            popup.classList.add("active");
+            return;
+        }
+            functions[e.target.id]();
+    };
+});
 
-const sendHTTPRequest = async (url, options) => {
-  elemSpinner.classList.add("js-show-spinner");
-  try {
-    const response = await fetch(url, options);
-    if (response.status === 200) return await response.json();
-    throw new Error(response.status);
-  } catch (error) {
-    showWeatherData();
-    console.error(error);
-  }
-};
+// let id = 0;
+const tamagochiHTMLElement = `
+<div class="body">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="beak">
+        <div></div>
+    </div>
+    <div class="feet"></div>
+</div>`;
 
-
-function getWeatherData(queryParameter) {
-  sendHTTPRequest(`https://weatherapi-com.p.rapidapi.com/current.json?q=${queryParameter}`, apiKey)
-    .then(showWeatherData)
-    .catch(console.error);
+function createTamagochiInstance() {
+  const obj = new Tamagochi(tamagochiName);
 }
 
+function createTamagochi() {
+  const elem = document.createElement("div");
+  // elem.id = id++;
+  elem.id = arr.length - 1;
+  elem.classList.add("bird");
+  elem.innerHTML = tamagochiHTMLElement;
+  wrapper.append(elem);
+}
 
-// start
-sendHTTPRequest("https://ipapi.co/json/")
-  .then((r) => getWeatherData(r.ip))
-  .catch(console.error);
+createTamagochi();
+createTamagochi();
+
+// const bird = new Tamagochi {
+
+// }

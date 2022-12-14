@@ -4,50 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
-    <link rel="stylesheet" type="text/css" href="https://github.com/necolas/normalize.css/blob/master/normalize.css">
-    <script src="https://kit.fontawesome.com/24fd0d6685.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <title>Tamagochi</title>
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 
-    <div class="spinner-wrap">
-        <div class="dot-pulse"></div>
-    </div>
+    <h2>underway ...</h2>
 
-    <main class="main">
+    <div class="globe">
+        <div class="hills"></div>
+        <div class="cloud small"></div>
+        <div class="cloud"></div>
+        <hr class="wire" noshade>
 
-
-        <div class='box'>
-            <div class='wave -one'></div>
-            <div class='wave -two'></div>
-            <div class='wave -three'></div>
-            <div class="weathercon"></div>
-            <div class="info">
-                <h2 class="location"></h2>
-                <p class="date"></p>
-                <h1 class="temp"></h1>
+        <div class="tamagochi_metrics">
+            <div>
+                Name: dsfs
+                <br>
+                Health: 80<br>
+                Saturation: 75<br>
+                Strength:<br>
+                Happiness:
             </div>
+
         </div>
 
-        <form class="form">
-            <div class="search">
-                <input type="search" placeholder="Введіть назву, або координати міста">
-                <button>
-                    <i class="fa fa-search"></i>
-                </button>
+        <div class="tamagochi_wrapper">
+
+            <div class="bird">
+                <div class="body">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="beak">
+                        <div></div>
+                    </div>
+                    <div class="feet"></div>
+                </div>
             </div>
-        </form>
 
-    </main>
-      
+        </div>
+
+    </div>
+
+    <nav>
+        <button id="createTamagochi">createTamagochi</button>
+        <br>
+        <button id="feed">Feed</button>
+        <button id="play">Play</button>
+        <button id="walk">Walk</button>
+        <button id="sleep">Sleep</button>
+        <button id="treat">Treat</button>
+    </nav>
+
+    <!-- ========= -->
+
+
+    <div class="popup__bg"></div>
+
+    <form class="popup">
+        <label>
+            <input type="text" name="name" placeholder="Name">
+        </label>
+
+        <button type="submit">Enter</button>
+    </form>
+
+    <!-- ========= -->
+
+
+
+
+    <script src="./script/Tamagochi.js"></script>
+    <script src="./script/script.js"></script>
 </body>
-
-<script src="./script/script.js"></script>
-
-<video autoplay muted loop>
-    <source src="./media/video.mp4" type="video/mp4">
-</video>
 
 </html>

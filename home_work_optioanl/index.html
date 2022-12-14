@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" type="text/css" href="https://github.com/necolas/normalize.css/blob/master/normalize.css">
+    <script src="https://kit.fontawesome.com/24fd0d6685.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+
+<body>
+
+    <div class="spinner-wrap">
+        <div class="dot-pulse"></div>
+    </div>
+
+    <main class="main">
+
+
+        <div class='box'>
+            <div class='wave -one'></div>
+            <div class='wave -two'></div>
+            <div class='wave -three'></div>
+            <div class="weathercon"></div>
+            <div class="info">
+                <h2 class="location"></h2>
+                <p class="date"></p>
+                <h1 class="temp"></h1>
+            </div>
+        </div>
+
+        <form class="form">
+            <div class="search">
+                <input type="search" placeholder="Введіть назву, або координати міста">
+                <button>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+    </main>
+      
+</body>
+
+<script src="./script/script.js"></script>
+
+<video autoplay muted loop>
+    <source src="./media/video.mp4" type="video/mp4">
+</video>
+
+</html>
