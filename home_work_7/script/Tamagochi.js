@@ -1,12 +1,11 @@
 class Tamagochi {
   constructor(
-    tamagochiName,
     tamagochiHealth = 100,
     tamagochiSaturation = 100,
     tamagochiStrength = 100,
     tamagochiHappiness = 100
   ) {
-    this.tamagochiName = tamagochiName;
+    // this.tamagochiName = tamagochiName;
     this.tamagochiHealth = tamagochiHealth;
     this.tamagochiSaturation = tamagochiSaturation;
     this.tamagochiStrength = tamagochiStrength;

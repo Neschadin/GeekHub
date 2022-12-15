@@ -1,31 +1,16 @@
-let popupBg = document.querySelector(".popup__bg"); // Фон попап окна
-let popup = document.querySelector(".popup"); // Само окно
-// let closePopupButton = document.querySelector(".close-popup"); // Кнопка для скрытия окна
-
-
-
-document.addEventListener("keydon", () => {
-  // Вешаем обработчик на крестик
-  popupBg.classList.remove("active"); // Убираем активный класс с фона
-  popup.classList.remove("active"); // И с окна
-});
-
-document.addEventListener("click", (e) => {
-  // Вешаем обработчик на весь документ
-  if (e.target === popupBg) {
-    // Если цель клика - фот, то:
-    popupBg.classList.remove("active"); // Убираем активный класс с фона
-    popup.classList.remove("active"); // И с окна
-  }
-});
-
-
-createTamagochi
-
-
 const wrapper = document.querySelector(".tamagochi_wrapper");
 const metrics = document.querySelector(".tamagochi_metrics");
-const arr = [];
+const tamagochiRoom = [];
+const tamagochiRoomObj = {};
+
+const popupBg = document.querySelector(".popup__bg");
+const popupForm = document.querySelector(".popup__form");
+
+const showPopup = (mode) => {
+  popupForm.reset();
+  popupForm.classList[mode]("active");
+  popupBg.classList[mode]("active");
+};
 
 const functions = {
   play() {
@@ -33,16 +18,32 @@ const functions = {
   },
 };
 
+popupForm.addEventListener("submit", (e) => {
+  let value = e.target[0].value;
+  value = value.replace(/[^a-z|A-Z]/gi, "");
+  e.preventDefault();
+  if (value ) {
+    createTamagochiInstance(value);
+    showPopup("remove");
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") showPopup("remove");
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target === popupBg) showPopup("remove");
+});
+
 document.querySelector("nav").addEventListener("click", (e) => {
-    if (e.target.nodeName === "BUTTON") {
-        if (e.target.id === "createTamagochi") {
-            e.preventDefault(); // Предотвращаем дефолтное поведение браузера
-            popupBg.classList.add("active"); // Добавляем класс 'active' для фона
-            popup.classList.add("active");
-            return;
-        }
-            functions[e.target.id]();
-    };
+  if (e.target.nodeName === "BUTTON") {
+    if (e.target.id === "createTamagochi") {
+      showPopup("add");
+      return;
+    }
+    functions[e.target.id]();
+  }
 });
 
 // let id = 0;
@@ -56,22 +57,18 @@ const tamagochiHTMLElement = `
     <div class="feet"></div>
 </div>`;
 
-function createTamagochiInstance() {
-  const obj = new Tamagochi(tamagochiName);
+//main func
+function createTamagochiInstance(tamagochiName) {
+  tamagochiRoomObj[tamagochiName] = new Tamagochi();
+  console.log(tamagochiRoomObj);
+  createTamagochiHTMLInstance(tamagochiName);
+
 }
 
-function createTamagochi() {
+function createTamagochiHTMLInstance(tamagochiName) {
   const elem = document.createElement("div");
-  // elem.id = id++;
-  elem.id = arr.length - 1;
   elem.classList.add("bird");
+  elem.title = tamagochiName;
   elem.innerHTML = tamagochiHTMLElement;
   wrapper.append(elem);
 }
-
-createTamagochi();
-createTamagochi();
-
-// const bird = new Tamagochi {
-
-// }

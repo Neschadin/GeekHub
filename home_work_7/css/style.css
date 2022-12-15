@@ -492,7 +492,7 @@ nav button {
   transition: 0.5s all;
 }
 
-.popup {
+.popup__form {
   z-index: 2;
   position: absolute;
   border-radius: 16px;
@@ -504,27 +504,27 @@ nav button {
   padding: 25px;
   transition: 0.5s all;
 }
-.popup.active {
+.popup__form.active {
   transform: translate(-50%, -50%) scale(1);
   transition: 0.5s all;
 }
-.popup label {
+.popup__form label {
   width: 100%;
   margin-bottom: 25px;
   display: flex;
   flex-direction: column-reverse;
 }
-.popup input {
+.popup__form input {
   height: 45px;
   font-size: 18px;
   border: none;
   outline: none;
   border-bottom: 1px solid #cfd0d3;
 }
-.popup input:focus {
+.popup__form input:focus {
   border-bottom: 1px solid #2982ff;
 }
-.popup button {
+.popup__form button {
   width: 100%;
   height: 45px;
   display: flex;
@@ -539,7 +539,7 @@ nav button {
   transition: 0.5s all;
   border-radius: 8px;
 }
-.popup button:hover {
+.popup__form button:hover {
   background: #fff;
   color: #2982ff;
   transition: 0.5s all;
