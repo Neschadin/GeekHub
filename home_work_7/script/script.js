@@ -1,7 +1,6 @@
 const wrapper = document.querySelector(".tamagochi_wrapper");
 const metrics = document.querySelector(".tamagochi_metrics");
-const tamagochiRoom = [];
-const tamagochiRoomObj = {};
+const tamagochiRoom = {};
 
 const popupBg = document.querySelector(".popup__bg");
 const popupForm = document.querySelector(".popup__form");
@@ -22,7 +21,7 @@ popupForm.addEventListener("submit", (e) => {
   let value = e.target[0].value;
   value = value.replace(/[^a-z|A-Z]/gi, "");
   e.preventDefault();
-  if (value ) {
+  if (value && value.length <= 10) {
     createTamagochiInstance(value);
     showPopup("remove");
   }
@@ -46,7 +45,11 @@ document.querySelector("nav").addEventListener("click", (e) => {
   }
 });
 
-// let id = 0;
+wrapper.addEventListener("click", (e) => {
+  console.log(e);
+if (e.target.className === "bird") console.log(1);
+});
+
 const tamagochiHTMLElement = `
 <div class="body">
     <div class="eye left"></div>
@@ -59,8 +62,8 @@ const tamagochiHTMLElement = `
 
 //main func
 function createTamagochiInstance(tamagochiName) {
-  tamagochiRoomObj[tamagochiName] = new Tamagochi();
-  console.log(tamagochiRoomObj);
+  tamagochiRoom[tamagochiName] = new Tamagochi();
+  // console.log(tamagochiRoom[tamagochiName]);
   createTamagochiHTMLInstance(tamagochiName);
 
 }
@@ -72,3 +75,5 @@ function createTamagochiHTMLInstance(tamagochiName) {
   elem.innerHTML = tamagochiHTMLElement;
   wrapper.append(elem);
 }
+
+createTamagochiInstance("tester");

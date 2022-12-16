@@ -1,23 +1,37 @@
 class Tamagochi {
-  constructor(
-    tamagochiHealth = 100,
-    tamagochiSaturation = 100,
-    tamagochiStrength = 100,
-    tamagochiHappiness = 100
-  ) {
-    // this.tamagochiName = tamagochiName;
-    this.tamagochiHealth = tamagochiHealth;
-    this.tamagochiSaturation = tamagochiSaturation;
-    this.tamagochiStrength = tamagochiStrength;
-    this.tamagochiHappiness = tamagochiHappiness;
+  constructor() {
+    this.health = 100;
+    this.saturation = 100;
+    this.strength = 100;
+    this.happiness = 100;
+
+    const checkParams = setInterval(() => {
+      this.health -= 5;
+      if (!this.health) clearInterval(checkParams);
+      if (!this.saturation) this.health -= 5;
+      if (!this.strength) this.health -= 5;
+      // console.log(this.health);
+    }, 500);
   }
 
-  // Every 3 seconds the character will have to decrease his parameters.Correspondingly, calling methods can increase these rates.
-  Feed() {}
-  Play() {} // increases happiness by + 5, and reduces the force by - 10 units and the saturation by - 5 units...Think of your own rules
-  Walk() {}
-  Sleep() {}
-  Treat() {}
-  // you can display emoticons that will characterize the character mood.
-  // In the case of a character's death, predict a sad message and stop other changes.
+
+  feed() {
+    this.saturation += 50;
+  };
+  play() {
+    this.happiness += 10;
+    this.saturation -= 10;
+    this.strength -= 10;
+  };
+  walk() {
+    this.strength -= 5;
+    this.saturation -= 5;
+  };
+  sleep() {
+    this.health += 10;
+    this.saturation -= 5;
+  };
+  treat() {
+    this.health = 100;
+  };
 }
