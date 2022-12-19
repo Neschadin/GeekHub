@@ -1,6 +1,10 @@
-const wrapper = document.querySelector(".tamagochi_wrapper");
-const metrics = document.querySelector(".tamagochi_metrics");
+import {
+  Tamagochi
+} from "./Tamagochi.js";
+
+const tamagochiHTMLWrapper = document.querySelector(".tamagochi_wrapper");
 const tamagochiRoom = {};
+let selectedTamagochi = null;
 
 const popupBg = document.querySelector(".popup__bg");
 const popupForm = document.querySelector(".popup__form");
@@ -11,17 +15,13 @@ const showPopup = (mode) => {
   popupBg.classList[mode]("active");
 };
 
-const functions = {
-  play() {
-    console.log("111");
-  },
-};
-
 popupForm.addEventListener("submit", (e) => {
   let value = e.target[0].value;
-  value = value.replace(/[^a-z|A-Z]/gi, "");
+  value = value.replace(/[^a-z|\d]/gi, "");
+
   e.preventDefault();
-  if (value && value.length <= 10) {
+
+  if (value && !tamagochiRoom[value] && value.length <= 10) {
     createTamagochiInstance(value);
     showPopup("remove");
   }
@@ -41,39 +41,32 @@ document.querySelector("nav").addEventListener("click", (e) => {
       showPopup("add");
       return;
     }
-    functions[e.target.id]();
+
+    if (selectedTamagochi && !Object.isFrozen(selectedTamagochi)) {
+      selectedTamagochi[e.target.id]();
+    }
   }
 });
 
-wrapper.addEventListener("click", (e) => {
-  console.log(e);
-if (e.target.className === "bird") console.log(1);
+tamagochiHTMLWrapper.addEventListener("click", (e) => {
+  const bird = e.target.closest(".bird");
+
+  if (!bird || !tamagochiHTMLWrapper.contains(bird) || selectedTamagochi?.name === bird.title) return;
+
+  selectedTamagochi = tamagochiRoom[bird.title];
+
+  tamagochiHTMLWrapper.querySelectorAll(".bird")
+    .forEach(item => item.classList.remove("selected"));
+
+  bird.classList.add("selected");
 });
 
-const tamagochiHTMLElement = `
-<div class="body">
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="beak">
-        <div></div>
-    </div>
-    <div class="feet"></div>
-</div>`;
 
 //main func
 function createTamagochiInstance(tamagochiName) {
-  tamagochiRoom[tamagochiName] = new Tamagochi();
-  // console.log(tamagochiRoom[tamagochiName]);
-  createTamagochiHTMLInstance(tamagochiName);
+  const instance = new Tamagochi(tamagochiName, tamagochiHTMLWrapper);
 
+  tamagochiRoom[tamagochiName] = instance;
+
+  instance.create();
 }
-
-function createTamagochiHTMLInstance(tamagochiName) {
-  const elem = document.createElement("div");
-  elem.classList.add("bird");
-  elem.title = tamagochiName;
-  elem.innerHTML = tamagochiHTMLElement;
-  wrapper.append(elem);
-}
-
-createTamagochiInstance("tester");
