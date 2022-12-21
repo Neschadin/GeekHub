@@ -42,7 +42,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
   const checking = arr.every((item) => item.value && validator(item));
 
   if (checking) {
-    arr.forEach(item => console.log(item))
+    arr.forEach(item => console.log(item.value))
     e.target.innerHTML = "<h1>All values are valid!</h1>";
   } else {
     alert("Wipe your eyes :)");
