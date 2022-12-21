@@ -17,11 +17,12 @@ document.getElementById("email")
 passwordInput.addEventListener("keyup", (e) => setValidateState(e.target));
 
 root.addEventListener("mousemove", (e) => {
-  let rect = document.getElementById("beam").getBoundingClientRect();
-  let mouseX = rect.right + rect.width / 2;
-  let mouseY = rect.top + rect.height / 2;
-  let rad = Math.atan2(mouseX - e.pageX, mouseY - e.pageY);
-  let degrees = rad * (20 / Math.PI) * -1 - 350;
+  const beam = document.getElementById("beam");
+  const rect = beam ? beam.getBoundingClientRect() : 0;
+  const mouseX = rect.right + rect.width / 2;
+  const mouseY = rect.top + rect.height / 2;
+  const rad = Math.atan2(mouseX - e.pageX, mouseY - e.pageY);
+  const degrees = rad * (20 / Math.PI) * -1 - 350;
 
   root.style.setProperty("--beamDegrees", `${degrees}deg`);
 });
