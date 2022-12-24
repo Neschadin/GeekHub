@@ -1,0 +1,12 @@
+.palette {
+  background-color: #282c34;
+  height: 500px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-around;
+  font-size: calc(10px + 2vmin);
+  color: rgb(255, 255, 255);
+}
