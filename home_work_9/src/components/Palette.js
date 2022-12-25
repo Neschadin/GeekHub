@@ -6,24 +6,33 @@ import DominantColor from "./DominantColor";
 
 import "./Palette.css";
 
-const getRandomInt = () => Math.floor(Math.random() * 256);
+const rgbLS = JSON.parse(localStorage.getItem("rgb"))
+  || {  r: [127],  g: [127],  b: [127]  };
 
+const saveToLocalStorage = (obj) =>
+  localStorage.setItem("rgb", JSON.stringify(obj));
+
+const getRandomInt = () =>
+  Math.floor(Math.random() * 256);
 
 // rgb.ri = 256 - rgb.r;
 // rgb.gi = 256 - rgb.g;
-// rgb.bi = 256 - rgb.b;
+// rgb.bi = 256 - rg
 
+const Palette = () => {
+  const [rgb, changeState] = useState(rgbLS);
 
-function Palette() {
-  const [rgb, changeState] = useState({ r: [127], g: [127], b: [127] });
-  
   const changeColors = () => {
-    changeState(({r,g,b}) => {
-      r.push(getRandomInt());
-      g.push(getRandomInt());
-      b.push(getRandomInt());
+    changeState((rgb) => {
+      rgb.r.push(getRandomInt());
+      rgb.g.push(getRandomInt());
+      rgb.b.push(getRandomInt());
 
-      return {r,g,b};
+      saveToLocalStorage({ ...rgb });
+      
+      console.log("state");
+      
+      return { ...rgb };
     });
   };
 
@@ -34,6 +43,6 @@ function Palette() {
       <DominantColor {...rgb} />
     </div>
   );
-}
+};
 
 export default Palette;
