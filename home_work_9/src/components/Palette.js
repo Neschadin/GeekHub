@@ -1,9 +1,10 @@
-import "./Palette.css";
-
 import { useState } from "react";
+
 import AverageColor from "./AverageColor";
 import Background from "./Background";
 import DominantColor from "./DominantColor";
+
+import "./Palette.css";
 
 const getRandomInt = () => Math.floor(Math.random() * 256);
 
@@ -17,12 +18,12 @@ function Palette() {
   const [rgb, changeState] = useState({ r: [127], g: [127], b: [127] });
   
   const changeColors = () => {
-    changeState((prevState) => {
-      prevState.r.push(getRandomInt());
-      prevState.g.push(getRandomInt());
-      prevState.b.push(getRandomInt());
+    changeState(({r,g,b}) => {
+      r.push(getRandomInt());
+      g.push(getRandomInt());
+      b.push(getRandomInt());
 
-      return {...prevState};
+      return {r,g,b};
     });
   };
 
