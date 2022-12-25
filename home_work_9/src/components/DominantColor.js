@@ -1,8 +1,22 @@
 export default function DominantColor({ r, g, b }) {
-  const dominantColor = (r > g + b);
-  return <span>DominantColor is: {`${dominantColor}`}</span>;
-}
+  r = r.at(-1);
+  g = g.at(-1);
+  b = b.at(-1);
 
-// If red > ( green + blue )  then the dominantColor is Red , 
-// if green > (red + blue) / 2 - Green 
-// etc.
+  const dominantColor =
+    r > g + b / 2
+      ? "red"
+      : g > r + b / 2
+      ? "green"
+      : b > g + r / 2
+      ? "blue"
+      : null;
+
+  return (
+    <span>
+      {dominantColor
+        ? `DominantColor is: ` + dominantColor
+        : "No dominant color"}
+    </span>
+  );
+}
