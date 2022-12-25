@@ -10,3 +10,9 @@
   font-size: calc(10px + 2vmin);
   color: rgb(255, 255, 255);
 }
+
+.output {
+  width: 90%;
+  display: flex;
+    justify-content: space-between;
+}

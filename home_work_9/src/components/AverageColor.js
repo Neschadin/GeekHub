@@ -5,8 +5,8 @@ export default function AverageColor({ r, g, b }) {
   };
 
   return (
-    <span>
-      Average colors:{getAverage(r)} {getAverage(g)} {getAverage(b)}
-    </span>
+    <div className="output">
+      <span>Average colors:</span><span>{getAverage(r)} {getAverage(g)} {getAverage(b)}</span>
+    </div>
   );
 }

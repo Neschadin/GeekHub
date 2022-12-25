@@ -13,10 +13,9 @@ export default function DominantColor({ r, g, b }) {
       : null;
 
   return (
-    <span>
-      {dominantColor
-        ? `DominantColor is: ` + dominantColor
-        : "No dominant color"}
-    </span>
+    <div className="output">
+      <span>{dominantColor ? "Dominant color is:" : "No dominant color"}</span>
+      <span>{dominantColor ?  dominantColor : null}</span>
+    </div>
   );
 }
