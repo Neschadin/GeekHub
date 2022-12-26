@@ -22,11 +22,15 @@ const getRandomInt = () =>
 function Palette() {
   const [rgb, changeState] = useState(rgbLS); 
   
-  function changeColors() {
+  function changeColors(e) {
+    e.stopPropagation();
+    console.log(e);
+    
     changeState((rgb) => {
-      rgb.r.push(getRandomInt());
-      rgb.g.push(getRandomInt());
-      rgb.b.push(getRandomInt());
+      
+      // rgb.r.push(getRandomInt());
+      // rgb.g.push(getRandomInt());
+      // rgb.b.push(getRandomInt());
 
       saveToLocalStorage({ ...rgb });
       
@@ -37,8 +41,8 @@ function Palette() {
 
 
   return (
-    <div onClick={changeColors} className="palette">
-      <Background {...rgb} />
+    <div className="palette">
+      <Background onClick={changeColors} {...rgb} />
       <AverageColor {...rgb} />
       <DominantColor {...rgb} />
     </div>
