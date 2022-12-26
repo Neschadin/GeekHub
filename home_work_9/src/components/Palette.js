@@ -5,9 +5,11 @@ import Background from "./Background";
 import DominantColor from "./DominantColor";
 
 import "./Palette.css";
+
 let i = 1;
+
 const rgbLS = JSON.parse(localStorage.getItem("rgb"))
-  || { r: [127], g: [127], b: [127] };
+  || {  r: [127],  g: [127],  b: [127]  };
 
 const saveToLocalStorage = (obj) =>
   localStorage.setItem("rgb", JSON.stringify(obj));
@@ -20,35 +22,29 @@ const getRandomInt = () =>
 // rgb.bi = 256 - rg
 
 function Palette() {
-  const [rgb, changeState] = useState(rgbLS); 
-  
-  function changeColors(e) {
-    e.stopPropagation();
-    console.log(e);
-    
-    changeState((rgb) => {
-      
-      // rgb.r.push(getRandomInt());
-      // rgb.g.push(getRandomInt());
-      // rgb.b.push(getRandomInt());
+  const [rgb, changeState] = useState(rgbLS);
 
-      saveToLocalStorage({ ...rgb });
-      
+  function changeColors() {
+    changeState(({ r, g, b }) => {
+      r.push(getRandomInt());
+      g.push(getRandomInt());
+      b.push(getRandomInt());
+
+      saveToLocalStorage({ r, g, b });
+
       console.log(i++);
-      return { ...rgb };
-    });
-  };
 
+      return { r, g, b };
+    });
+  }
 
   return (
     <div className="palette">
-      <Background onClick={changeColors} {...rgb} />
+      <Background onChangeColors={changeColors} {...rgb} />
       <AverageColor {...rgb} />
       <DominantColor {...rgb} />
     </div>
   );
 }
-
-// Palette.whyDidYouRender = true;
 
 export default Palette;
