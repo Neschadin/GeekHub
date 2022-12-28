@@ -12,7 +12,8 @@ const rgbLS = JSON.parse(localStorage.getItem("rgb"))
 const saveToLocalStorage = (obj) =>
   localStorage.setItem("rgb", JSON.stringify(obj));
 
-const getRandomInt = () => Math.floor(Math.random() * 256);
+const getRandomInt = () =>
+  Math.floor(Math.random() * 256);
 
 function Palette() {
   const [rgb, changeState] = useState(rgbLS);
@@ -22,8 +23,6 @@ function Palette() {
   const b = rgb.b.at(-1);
 
   const styleBg = {
-    transitionDuration: "1000ms",
-    transitionProperty: "background-color",
     backgroundColor: `rgb(${r}, ${g}, ${b})`,
     color: `rgb(${256 - r}, ${256 - g}, ${256 - b})`,
   };
@@ -41,13 +40,11 @@ function Palette() {
   };
 
   return (
-    <div style={styleBg}>
-      <div className="palette">
-        func instance
-        <Background onChangeColors={changeColors} {...rgb} />
-        <AverageColor {...rgb} />
-        <DominantColor {...rgb} />
-      </div>
+    <div className="palette" style={styleBg}>
+      func instance
+      <Background onChangeColors={changeColors} {...rgb} />
+      <AverageColor {...rgb} />
+      <DominantColor {...rgb} />
     </div>
   );
 }

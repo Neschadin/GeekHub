@@ -39,23 +39,19 @@ class Palette extends Component {
     const b = this.state.b.at(-1);
 
     const style = {
-      transitionDuration: "1000ms",
-      transitionProperty: "background-color",
       backgroundColor: `rgb(${r}, ${g}, ${b})`,
       color: `rgb(${256 - r}, ${256 - g}, ${256 - b})`,
     };
 
     return (
-      <div style={style}>
-        <div className="palette">
-          class instance
-          <Background
-            onChangeColors={() => this.onChangeColors()}
-            {...this.state}
-          />
-          <AverageColor {...this.state} />
-          <DominantColor {...this.state} />
-        </div>
+      <div className="palette" style={style}>
+        class instance
+        <Background
+          onChangeColors={() => this.onChangeColors()}
+          {...this.state}
+        />
+        <AverageColor {...this.state} />
+        <DominantColor {...this.state} />
       </div>
     );
   }
