@@ -6,13 +6,14 @@ import DominantColor from "./components/DominantColor";
 
 import "./Palette.css";
 
-const rgbLS = JSON.parse(localStorage.getItem("rgbClass"))
-  || {  r: [127],  g: [127],  b: [127]  };
+const rgbLS = JSON.parse(localStorage.getItem("rgbClass")) ||
+  { r: [127], g: [127], b: [127] };
 
 const saveToLocalStorage = (obj) =>
   localStorage.setItem("rgbClass", JSON.stringify(obj));
 
-const getRandomInt = () => Math.floor(Math.random() * 256);
+const getRandomInt = () =>
+  Math.floor(Math.random() * 256);
 
 class Palette extends Component {
   constructor() {
@@ -37,7 +38,7 @@ class Palette extends Component {
     const g = this.state.g.at(-1);
     const b = this.state.b.at(-1);
 
-    this.style = {
+    const style = {
       transitionDuration: "1000ms",
       transitionProperty: "background-color",
       backgroundColor: `rgb(${r}, ${g}, ${b})`,
@@ -45,9 +46,9 @@ class Palette extends Component {
     };
 
     return (
-      <div style={this.style}>
+      <div style={style}>
         <div className="palette">
-          class instanse
+          class instance
           <Background
             onChangeColors={() => this.onChangeColors()}
             {...this.state}
