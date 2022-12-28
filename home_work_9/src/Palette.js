@@ -6,7 +6,7 @@ import DominantColor from "./components/DominantColor";
 
 import "./Palette.css";
 
-const rgbLS = JSON.parse(localStorage.getItem("rgb"))
+const rgbLS = JSON.parse(localStorage.getItem("rgbClass"))
   || {  r: [127],  g: [127],  b: [127]  };
 
 const saveToLocalStorage = (obj) =>
@@ -28,7 +28,7 @@ function Palette() {
     color: `rgb(${256 - r}, ${256 - g}, ${256 - b})`,
   };
 
-  function changeColors() {
+  const changeColors = () => {
     changeState(({ r, g, b }) => {
       r.push(getRandomInt());
       g.push(getRandomInt());
@@ -38,11 +38,12 @@ function Palette() {
 
       return { r, g, b };
     });
-  }
+  };
 
   return (
     <div style={styleBg}>
       <div className="palette">
+        func instance
         <Background onChangeColors={changeColors} {...rgb} />
         <AverageColor {...rgb} />
         <DominantColor {...rgb} />
