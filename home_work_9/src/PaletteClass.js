@@ -33,15 +33,15 @@ class Palette extends Component {
   }
 
   render() {
-    this.r = this.state.r.at(-1);
-    this.g = this.state.g.at(-1);
-    this.b = this.state.b.at(-1);
+    const r = this.state.r.at(-1);
+    const g = this.state.g.at(-1);
+    const b = this.state.b.at(-1);
 
     this.style = {
       transitionDuration: "1000ms",
       transitionProperty: "background-color",
-      backgroundColor: `rgb(${this.r}, ${this.g}, ${this.b})`,
-      color: `rgb(${256 - this.r}, ${256 - this.g}, ${256 - this.b})`,
+      backgroundColor: `rgb(${r}, ${g}, ${b})`,
+      color: `rgb(${256 - r}, ${256 - g}, ${256 - b})`,
     };
 
     return (

@@ -6,7 +6,7 @@ import DominantColor from "./components/DominantColor";
 
 import "./Palette.css";
 
-const rgbLS = JSON.parse(localStorage.getItem("rgbClass"))
+const rgbLS = JSON.parse(localStorage.getItem("rgb"))
   || {  r: [127],  g: [127],  b: [127]  };
 
 const saveToLocalStorage = (obj) =>
