@@ -8,7 +8,14 @@ import Checkbox from "@mui/material/Checkbox";
 
 let markedFields = [];
 
-export default function Checkboxes({ id, label, required, onChange, options, errorMessage }) {
+export default function Checkboxes({
+  id,
+  label,
+  required,
+  onChange,
+  options,
+  errorMessage,
+}) {
   const handleChange = (elem) => {
     elem.checked
       ? (markedFields = [...markedFields, elem.value])
@@ -18,7 +25,7 @@ export default function Checkboxes({ id, label, required, onChange, options, err
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box>
       <FormControl
         onChange={(e) => handleChange(e.target)}
         required={required}
@@ -27,7 +34,9 @@ export default function Checkboxes({ id, label, required, onChange, options, err
         error={!!errorMessage}
         variant="standard"
       >
-        <FormLabel component="legend">{errorMessage ? errorMessage : label}</FormLabel>
+        <FormLabel component="legend">
+          {errorMessage ? errorMessage : label}
+        </FormLabel>
         <FormGroup>
           {options.map((item) => (
             <FormControlLabel

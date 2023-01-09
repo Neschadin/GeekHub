@@ -1,4 +1,4 @@
-import { useId, useContext, useState, useEffect } from "react";
+import { useId, useContext, useState, useEffect, useRef } from "react";
 
 import validator from "./validator";
 
@@ -43,25 +43,22 @@ export const FormField = ({ type, id: propsId, ...props }) => {
   const innerId = useId();
   const id = propsId || `FormField${innerId}`;
 
-  const [value, setInputValue] = useState("");
-
-  const [errorMessage, setErrorMMessage] = useState("");
+  const [firstInit, setFirstInit] = useState(false);
   const [isValid, setIsValid] = useState(false);
+
+  const [value, setInputValue] = useState("");
+  const [errorMessage, setErrorMMessage] = useState("");
+
+  const passRef = useRef();
 
   const onChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  useEffect(
-    () =>
-      setFormContext((prevContext) => ({
-        ...prevContext,
-        [props.name]: { isValid: false, values: [], errorMessages: [] },
-      })),
-    []
-  );
+  // console.log(ref);
 
   useEffect(() => {
+    if (!firstInit) return;
     setFormContext((prevContext) => ({
       ...prevContext,
       [props.name]: {
@@ -72,17 +69,16 @@ export const FormField = ({ type, id: propsId, ...props }) => {
   }, [isValid]);
 
   useEffect(() => {
-    if (props.name !== "consent" && !value) {
-      setIsValid(false);
-      return;
-    }
+    if (!firstInit) return;
 
     const handlerValidator = () => {
-      const { errorMessage, resultValue } = validator(value, props.name);
-      // console.log(value);
-      // console.log(resultValue);
-      // console.log(errorMessage);
-      
+      const { errorMessage, resultValue } = validator(
+        props.name !== "confirmPassword"
+          ? value
+          : [value, formContext.password.values.at(-1)],
+        props.name
+      );
+
       setInputValue(resultValue);
       setErrorMMessage(errorMessage);
       setIsValid(!errorMessage ? true : false);
@@ -106,7 +102,7 @@ export const FormField = ({ type, id: propsId, ...props }) => {
     };
 
     const t =
-      ["phone", "firstName", "lastName", "email", "password"].some(
+      ["title", "phone", "firstName", "lastName", "email", "password"].some(
         (template) => template === props.name
       ) && 1000;
 
@@ -117,18 +113,29 @@ export const FormField = ({ type, id: propsId, ...props }) => {
     };
   }, [value]);
 
+  useEffect(
+    // first init
+    () => {
+      setFirstInit(true);
+      setFormContext((prevContext) => ({
+        ...prevContext,
+        [props.name]: { isValid: false, values: [], errorMessages: [] },
+      }));
+
+      props.name === "prefer" && setInputValue("cola");
+    },
+    []
+  );
 
   return (
-    <div>
-      <Component
-        {...props}
-        id={id}
-        type={type}
-        errorMessage={errorMessage}
-        error={!isValid}
-        onChange={setInputValue}
-        value={value || ""}
-      />
-    </div>
+    <Component
+      {...props}
+      id={id}
+      type={type}
+      errorMessage={errorMessage}
+      error={!isValid}
+      onChange={setInputValue}
+      value={value || ""}
+    />
   );
 };

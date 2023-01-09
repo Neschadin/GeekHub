@@ -1,27 +1,25 @@
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 export default function Terms({ label, onChange, errorMessage }) {
   return (
-    <FormControl
-      sx={{
-        "& > :not(style)": { m: 1, width: "25ch" },
-      }}
-    >
-      <FormControlLabel
-        onChange={(e) => onChange(e.target.checked)}
-        value="start"
-        control={<Checkbox />}
-        label={label}
-        labelPlacement="start"
-        aria-label={label}
-        variant="filled"
-      />
+    <Box sx={{ m: 1, width: "25ch" }}>
+      <div style={{ display: "flex" }}>
+        <Typography
+          aria-label={label}
+          variant="caption"
+          display="block"
+          gutterBottom
+        >
+          {label}
+        </Typography>
+        <Checkbox onChange={(e) => onChange(e.target.checked)} />
+      </div>
       <FormHelperText error={!!errorMessage}>
-        {errorMessage ? errorMessage : "Terms"}
+        {errorMessage ? errorMessage : " "}
       </FormHelperText>
-    </FormControl>
+    </Box>
   );
 }

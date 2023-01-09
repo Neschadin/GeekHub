@@ -6,18 +6,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-export default function RadioInput({ id, options, label, onChange,required }) {
-  useEffect(() => {
-    onChange("cola");
-  }, []);
-
+export default function RadioInput({ id, options, label, onChange, required,value }) {
   return (
     <FormControl
       sx={{ m: 1, height: 50, width: "25ch" }}
       onChange={(e) => onChange(e.target.value)}
     >
-      <FormLabel required = { required } id={id}>{label}</FormLabel>
-      <RadioGroup row aria-labelledby={label} defaultValue="cola">
+      <FormLabel required={required} id={id}>
+        {label}
+      </FormLabel>
+      <RadioGroup row aria-labelledby={label} value={value}>
         {options.map((item) => (
           <FormControlLabel
             value={item.value}

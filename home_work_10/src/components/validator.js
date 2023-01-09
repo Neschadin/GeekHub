@@ -9,9 +9,9 @@ export default function validator(value, name) {
     case "lastName":
       result.errorMessage = /^[A-Z][a-z]+$/.test(value)
         ? null
-        : `Enter valid ${
+        : `Enter your ${
             (name === "firstName" && "first") || (name === "lastName" && "last")
-          } name`;
+          } name correctly`;
       return result;
 
     case "phone": // Checking: All Ukraine operators. Length are valid for phone numbers. Digits only. 38067… or 067… variants are valid, but will be returned 38067…
@@ -36,7 +36,7 @@ export default function validator(value, name) {
       const regExpEmail = /^([a-z0-9]+(\.[a-z0-9]+)*)\@[a-z0-9]+\.[a-z]{2,}$/i;
       result.errorMessage = regExpEmail.test(value)
         ? null
-        : "Enter valid e-mail";
+        : "Enter a valid e-mail address";
       return result;
 
     case "password": // Checking: minimum one digit, one small and big letters. Must include minimum one special symbol. Length 8+.
@@ -44,18 +44,24 @@ export default function validator(value, name) {
         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-#!$@%^&*_+~=:;?\/])[-\w#!$@%^&*+~=:;?\/]{8,}$/;
       result.errorMessage = regExpPass.test(value)
         ? null
-        : "Enter valid password";
+        : "Enter a valid password";
+      return result;
+
+    case "confirmPassword":
+      result.errorMessage =
+        value[0] === value[1] ? null : "The passwords don't match";
+      result.resultValue = value[0];
       return result;
 
     case "consent":
-      result.errorMessage = value  ? null : "Confirm terms";
-      value && (result.resultValue = "confirmed");
+      result.errorMessage = value ? null : "Confirm terms";
       return result;
 
+    case "title":
     case "prefer":
     case "gender":
     case "race":
-      result.errorMessage = value.length > 0 ? null : "Make your choice";
+      result.errorMessage = value.length > 0 ? null : "Do something";
       return result;
 
     default:

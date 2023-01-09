@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 
+import Switch from "@mui/material/Switch";
+
 import { Form } from "./Form";
 import { FormField } from "./FormField";
 
@@ -11,14 +13,21 @@ export const EditUserProfile = () => {
     // Save to API or do somethings
   };
 
+  const handlerSwitch = () => {
+    setIsGroupAccount((prevState) => (!prevState));
+  };
+
   const formRef = useRef();
 
   return (
     <>
-      {/*
-        Тут зробити чекбокс який буде переключати `setIsGroupAccount`
-      */}
       <Form ref={formRef} onSubmit={onSubmit} formName="Edit user profile">
+        <Switch
+          aria-label={"switch to group account"}
+          onChange={handlerSwitch}
+          formNoValidate
+        />
+        <small>switch account</small>
         {isGroupAccount ? (
           <FormField required type="text" name="title" label="Title" />
         ) : (
@@ -73,6 +82,7 @@ export const EditUserProfile = () => {
           options={[
             { value: "pepsi", label: "Pepsi" },
             { value: "cola", label: "Cola" },
+            { value: "whiskey", label: "WhiskeyCola" },
           ]}
         />
         <FormField
