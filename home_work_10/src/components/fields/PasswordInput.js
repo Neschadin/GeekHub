@@ -9,7 +9,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function PasswordInput({
-  value,
   name,
   onChange,
   errorMessage,

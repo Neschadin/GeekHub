@@ -1,4 +1,3 @@
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 import React, { useRef, useState, useEffect, useImperativeHandle } from "react";
@@ -18,7 +17,7 @@ const serialize = (data) => {
   return obj;
 };
 
-export const FormContext = React.createContext({}); 
+export const FormContext = React.createContext({});
 
 export const Form = React.forwardRef(
   ({ onSubmit: propsOnSubmit, children, formName, ...rest }, ref) => {
@@ -48,7 +47,7 @@ export const Form = React.forwardRef(
 
       console.log(formRef);
 
-      const formData = new FormData(formRef.current); 
+      const formData = new FormData(formRef.current);
       const values = serialize(formData);
 
       try {

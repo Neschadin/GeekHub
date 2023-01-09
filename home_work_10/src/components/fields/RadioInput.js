@@ -1,12 +1,17 @@
-import { useEffect } from "react";
-
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-export default function RadioInput({ id, options, label, onChange, required,value }) {
+export default function RadioInput({
+  id,
+  options,
+  label,
+  onChange,
+  required,
+  value,
+}) {
   return (
     <FormControl
       sx={{ m: 1, height: 50, width: "25ch" }}

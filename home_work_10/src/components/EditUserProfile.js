@@ -14,7 +14,7 @@ export const EditUserProfile = () => {
   };
 
   const handlerSwitch = () => {
-    setIsGroupAccount((prevState) => (!prevState));
+    setIsGroupAccount((prevState) => !prevState);
   };
 
   const formRef = useRef();
@@ -78,7 +78,7 @@ export const EditUserProfile = () => {
           type="radio"
           name="prefer"
           label="What do you prefer?"
-          defaultChecked="cola" // Повиненне бути обране за замовчуванням
+          defaultChecked="cola"
           options={[
             { value: "pepsi", label: "Pepsi" },
             { value: "cola", label: "Cola" },
