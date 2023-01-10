@@ -34,11 +34,10 @@ const useFormFieldComponent = (type) => {
   }
 };
 
-export const FormField = ({ type, id: propsId, ...props }) => {
+export const FormField = ({ type, id: propsId, name, ...props }) => {
   const Component = useFormFieldComponent(type);
 
   const { formContext, setFormContext } = useContext(FormContext);
-  // console.log(FormContext);
 
   const innerId = useId();
   const id = propsId || `FormField${innerId}`;
@@ -55,14 +54,12 @@ export const FormField = ({ type, id: propsId, ...props }) => {
     setInputValue(event.target.value);
   };
 
-  // console.log(ref);
-
   useEffect(() => {
     if (!firstInit) return;
     setFormContext((prevContext) => ({
       ...prevContext,
-      [props.name]: {
-        ...prevContext[props.name],
+      [name]: {
+        ...prevContext[name],
         isValid,
       },
     }));
@@ -73,10 +70,10 @@ export const FormField = ({ type, id: propsId, ...props }) => {
 
     const handlerValidator = () => {
       const { errorMessage, resultValue } = validator(
-        props.name !== "confirmPassword"
+        name !== "confirmPassword"
           ? value
           : [value, formContext.password.values.at(-1)],
-        props.name
+        name
       );
 
       setInputValue(resultValue);
@@ -84,7 +81,7 @@ export const FormField = ({ type, id: propsId, ...props }) => {
       setIsValid(!errorMessage ? true : false);
 
       setFormContext((prevContext) => {
-        const item = prevContext[props.name];
+        const item = prevContext[name];
         const newValues = [...item.values, resultValue];
         const newErrorMessages = errorMessage
           ? [...item.errorMessages, errorMessage]
@@ -92,7 +89,7 @@ export const FormField = ({ type, id: propsId, ...props }) => {
 
         return {
           ...prevContext,
-          [props.name]: {
+          [name]: {
             isValid: item.isValid,
             values: newValues,
             errorMessages: newErrorMessages,
@@ -103,7 +100,7 @@ export const FormField = ({ type, id: propsId, ...props }) => {
 
     const t =
       ["title", "phone", "firstName", "lastName", "email", "password"].some(
-        (template) => template === props.name
+        (template) => template === name
       ) && 1000;
 
     const timer = setTimeout(handlerValidator, t);
@@ -119,23 +116,27 @@ export const FormField = ({ type, id: propsId, ...props }) => {
       setFirstInit(true);
       setFormContext((prevContext) => ({
         ...prevContext,
-        [props.name]: { isValid: false, values: [], errorMessages: [] },
+        [name]: { isValid: false, values: [], errorMessages: [] },
       }));
 
-      props.name === "prefer" && setInputValue("cola");
+      name === "prefer" && setInputValue("cola");
     },
     []
   );
 
   return (
-    <Component
-      {...props}
-      id={id}
-      type={type}
-      errorMessage={errorMessage}
-      error={!isValid}
-      onChange={setInputValue}
-      value={value || ""}
-    />
+    <>
+      <label htmlFor={id}></label>
+      <Component
+        {...props}
+        name={name}
+        id={id}
+        type={type}
+        errorMessage={errorMessage}
+        error={!isValid}
+        onChange={setInputValue}
+        value={value || ""}
+      />
+    </>
   );
 };

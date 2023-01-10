@@ -2,12 +2,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
 export default function Input({
-  id,
   label,
-  required,
   onChange,
   errorMessage,
-  value,
+  ...props
 }) {
   return (
     <Box
@@ -18,10 +16,8 @@ export default function Input({
       autoComplete="off"
     >
       <TextField
-        value={value}
-        required={required}
+        {...props}
         error={!!errorMessage}
-        id={id}
         label={errorMessage ? errorMessage : label}
         onChange={(e) => onChange(e.target.value)}
         aria-label={label}

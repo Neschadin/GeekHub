@@ -12,6 +12,7 @@ export default function SelectInput({
   onChange,
   required,
   errorMessage,
+  name
 }) {
   return (
     <Box sx={{ m: 1, width: "25ch" }}>
@@ -20,6 +21,7 @@ export default function SelectInput({
           {errorMessage ? errorMessage : label}
         </InputLabel>
         <Select
+          name={name}
           labelId={id}
           id={id}
           value={value}

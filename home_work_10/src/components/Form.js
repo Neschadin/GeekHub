@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import React, { useRef, useState, useEffect, useImperativeHandle } from "react";
 
 const serialize = (data) => {
-  let obj = {}; // const ?
+  const obj = {};
   for (let [key, value] of data) {
     if (obj[key] !== undefined) {
       if (!Array.isArray(obj[key])) {
@@ -32,7 +32,6 @@ export const Form = React.forwardRef(
       Object.values(formContext).every((item) => item.isValid)
         ? setIsValidForm(true)
         : setIsValidForm(false);
-      // console.log(formContext);
     }, [formContext]);
 
     useImperativeHandle(ref, () => ({
@@ -45,8 +44,6 @@ export const Form = React.forwardRef(
       e.preventDefault();
       setIsSubmitting(true);
 
-      console.log(formRef);
-
       const formData = new FormData(formRef.current);
       const values = serialize(formData);
 
@@ -56,7 +53,9 @@ export const Form = React.forwardRef(
         console.error(error);
         alert("alarm!");
       } finally {
-        setIsSubmitting(false);
+        setTimeout(() => {
+          setIsSubmitting(false);
+        }, 2000);
       }
     };
 
@@ -64,10 +63,14 @@ export const Form = React.forwardRef(
       <FormContext.Provider value={{ formContext, setFormContext }}>
         <fieldset disabled={isSubmitting} style={{ borderRadius: "10px" }}>
           <legend>{formName}</legend>
-          <form noValidate {...rest} ref={formRef} onSubmit={onSubmit}>
+          <form ref={formRef} noValidate {...rest} onSubmit={onSubmit}>
             {children}
-            {/* <input ref={submitRef} type="submit" hidden /> */}
-            <Button sx={{ m: 1 }} disabled={!isValidForm} variant="contained">
+            <Button
+              type="submit"
+              sx={{ m: 1 }}
+              disabled={!isValidForm || isSubmitting}
+              variant="contained"
+            >
               submit
             </Button>
           </form>

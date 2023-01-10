@@ -14,6 +14,7 @@ export default function Checkboxes({
   onChange,
   options,
   errorMessage,
+  name,
 }) {
   const handleChange = (elem) => {
     elem.checked
@@ -39,6 +40,7 @@ export default function Checkboxes({
         <FormGroup>
           {options.map((item) => (
             <FormControlLabel
+              name={name}
               sx={{ height: 32 }}
               control={<Checkbox />}
               value={item.value}

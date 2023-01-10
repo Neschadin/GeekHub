@@ -11,6 +11,7 @@ export default function RadioInput({
   onChange,
   required,
   value,
+  name
 }) {
   return (
     <FormControl
@@ -23,6 +24,7 @@ export default function RadioInput({
       <RadioGroup row aria-labelledby={label} value={value}>
         {options.map((item) => (
           <FormControlLabel
+            name={name}
             value={item.value}
             control={<Radio />}
             label={item.label}

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import Switch from "@mui/material/Switch";
 
@@ -9,19 +9,16 @@ export const EditUserProfile = () => {
   const [isGroupAccount, setIsGroupAccount] = useState(false);
 
   const onSubmit = (values) => {
-    console.log("values", values);
-    // Save to API or do somethings
+    localStorage.setItem("passForm", JSON.stringify(values));
   };
 
   const handlerSwitch = () => {
     setIsGroupAccount((prevState) => !prevState);
   };
 
-  const formRef = useRef();
-
   return (
     <>
-      <Form ref={formRef} onSubmit={onSubmit} formName="Edit user profile">
+      <Form onSubmit={onSubmit} formName="Edit user profile">
         <Switch
           aria-label={"switch to group account"}
           onChange={handlerSwitch}
